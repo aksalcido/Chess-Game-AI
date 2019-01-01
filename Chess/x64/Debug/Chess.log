@@ -1,4 +1,56 @@
-﻿  GameObject.cpp
-  main.cpp
+﻿  main.cpp
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(1615): error C2988: unrecognizable template declaration/definition
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(1615): error C2059: syntax error: 'constant'
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(1616): error C2760: syntax error: unexpected token 'constant', expected 'id-expression'
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(1617): error C2143: syntax error: missing ';' before '{'
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(1617): error C2447: '{': missing function header (old-style formal list?)
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(1623): error C2988: unrecognizable template declaration/definition
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(1623): error C2059: syntax error: 'constant'
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(1624): error C2143: syntax error: missing ';' before '{'
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(1624): error C2447: '{': missing function header (old-style formal list?)
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(1629): error C2988: unrecognizable template declaration/definition
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(1629): error C2059: syntax error: 'constant'
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(1631): error C2143: syntax error: missing ';' before '{'
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(1631): error C2447: '{': missing function header (old-style formal list?)
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(4060): error C2059: syntax error: 'constant'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(4097): note: see reference to class template instantiation 'std::_Yarn<_Elem>' being compiled
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(4061): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xstring(3114): error C2059: syntax error: 'constant'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xstring(3713): note: see reference to class template instantiation 'std::basic_string<_Elem,_Traits,_Alloc>' being compiled
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xstring(3115): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xlocale(462): error C2059: syntax error: 'constant'
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xlocale(462): error C2238: unexpected token(s) preceding ';'
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\system_error(492): error C2059: syntax error: 'constant'
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\system_error(493): error C2143: syntax error: missing ';' before '{'
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\system_error(494): error C2039: '_Message': is not a member of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xstring(4054): note: see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+  GameState.cpp
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(1615): error C2988: unrecognizable template declaration/definition
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(1615): error C2059: syntax error: 'constant'
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(1616): error C2760: syntax error: unexpected token 'constant', expected 'id-expression'
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(1617): error C2143: syntax error: missing ';' before '{'
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(1617): error C2447: '{': missing function header (old-style formal list?)
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(1623): error C2988: unrecognizable template declaration/definition
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(1623): error C2059: syntax error: 'constant'
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(1624): error C2143: syntax error: missing ';' before '{'
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(1624): error C2447: '{': missing function header (old-style formal list?)
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(1629): error C2988: unrecognizable template declaration/definition
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(1629): error C2059: syntax error: 'constant'
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(1631): error C2143: syntax error: missing ';' before '{'
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(1631): error C2447: '{': missing function header (old-style formal list?)
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(4060): error C2059: syntax error: 'constant'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(4097): note: see reference to class template instantiation 'std::_Yarn<_Elem>' being compiled
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xutility(4061): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xstring(3114): error C2059: syntax error: 'constant'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xstring(3713): note: see reference to class template instantiation 'std::basic_string<_Elem,_Traits,_Alloc>' being compiled
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xstring(3115): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xlocale(462): error C2059: syntax error: 'constant'
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xlocale(462): error C2238: unexpected token(s) preceding ';'
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\system_error(492): error C2059: syntax error: 'constant'
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\system_error(493): error C2143: syntax error: missing ';' before '{'
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\system_error(494): error C2039: '_Message': is not a member of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.12.25827\include\xstring(4054): note: see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
   Generating Code...
-  Chess.vcxproj -> C:\Users\Armando\Desktop\Coding Files\VisualStudio Projects\C++\Projects\Chess\Chess-Game-AI\x64\Debug\Chess.exe
+  Compiling...
+  GameObject.cpp
+  Generating Code...
