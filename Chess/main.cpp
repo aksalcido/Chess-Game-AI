@@ -16,6 +16,7 @@ int main()
 		if (game.validateMove(rowStart, columnStart, rowEnd, columnEnd))
 		{
 			std::cout << "Move: (" << rowStart << ", " << columnStart << ") -> (" << rowEnd << ", " << columnEnd << ")" << std::endl;
+			
 		}
 		
 		else
@@ -23,6 +24,7 @@ int main()
 			std::cout << "Invalid Input... Please try again" << std::endl;
 		}
 	}
+
 
 	return 0;
 }

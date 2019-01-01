@@ -6,13 +6,15 @@ Chess::GameObject::GameObject()
 
 }
 
-Chess::GameObject::GameObject(int newX, int newY, int newColor, char rep) : x(newX), y(newY), color(newColor), representation(rep)
+Chess::GameObject::GameObject(int newX, int newY, int newColor, char rep) 
+	: x(newX), y(newY), color(newColor), representation(rep)
 {
 
 }
 
 // Copy Constructor //
-Chess::GameObject::GameObject(const GameObject & piece) : x(piece.x), y(piece.y), color(piece.color), representation(piece.representation)
+Chess::GameObject::GameObject(const GameObject & piece) 
+	: x(piece.x), y(piece.y), color(piece.color), representation(piece.representation)
 {
 
 }
@@ -49,7 +51,8 @@ Chess::GameObject::~GameObject()
 }
 
 // ===== King Class ===== //
-Chess::King::King(int newX, int newY, int newColor, char rep) : untouched(true), inCheck(false), GameObject(newX, newY, newColor, rep)
+Chess::King::King(int newX, int newY, int newColor, char rep) 
+	: untouched(true), inCheck(false), GameObject(newX, newY, newColor, rep)
 {
 
 }
@@ -59,17 +62,29 @@ void Chess::King::move()
 
 }
 
-bool Chess::King::validMove(const int row, const int column, GameObject(*board[dimension][dimension]))
+bool Chess::King::validMove(int row, int column, GameObject(*board[dimension][dimension]))
 {
 	return true;
 }
+
+std::vector< std::pair<int, int> > Chess::King::acquireMoves()
+{
+	std::vector< std::pair<int, int> > moves;
+
+
+
+
+	return moves;
+}
+
 
 Chess::King::~King()
 {
 
 }
 // ===== Queen Class ===== //
-Chess::Queen::Queen(int newX, int newY, int newColor, char rep) : GameObject(newX, newY, newColor, rep)
+Chess::Queen::Queen(int newX, int newY, int newColor, char rep) 
+	: GameObject(newX, newY, newColor, rep)
 {
 
 }
@@ -80,9 +95,19 @@ void Chess::Queen::move()
 
 }
 
-bool Chess::Queen::validMove(const int row, const int column, GameObject(*board[dimension][dimension]))
+bool Chess::Queen::validMove(int row, int column, GameObject(*board[dimension][dimension]))
 {
 	return true;
+}
+
+std::vector< std::pair<int, int> > Chess::Queen::acquireMoves()
+{
+	std::vector< std::pair<int, int> > moves;
+
+
+
+
+	return moves;
 }
 
 Chess::Queen::~Queen()
@@ -90,7 +115,8 @@ Chess::Queen::~Queen()
 
 }
 // ===== Bishop Class ===== //
-Chess::Bishop::Bishop(int newX, int newY, int newColor, char rep) : GameObject(newX, newY, newColor, rep)
+Chess::Bishop::Bishop(int newX, int newY, int newColor, char rep) 
+	: GameObject(newX, newY, newColor, rep)
 {
 
 }
@@ -101,9 +127,19 @@ void Chess::Bishop::move()
 
 }
 
-bool Chess::Bishop::validMove(const int row, const int column, GameObject(*board[dimension][dimension]))
+bool Chess::Bishop::validMove(int row, int column, GameObject(*board[dimension][dimension]))
 {
 	return true;
+}
+
+std::vector< std::pair<int, int> > Chess::Bishop::acquireMoves()
+{
+	std::vector< std::pair<int, int> > moves;
+
+
+
+
+	return moves;
 }
 
 Chess::Bishop::~Bishop()
@@ -111,7 +147,8 @@ Chess::Bishop::~Bishop()
 
 }
 // ===== Knight Class ===== //
-Chess::Knight::Knight(int newX, int newY, int newColor, char rep) : GameObject(newX, newY, newColor, rep)
+Chess::Knight::Knight(int newX, int newY, int newColor, char rep) 
+	: GameObject(newX, newY, newColor, rep)
 {
 
 }
@@ -122,9 +159,19 @@ void Chess::Knight::move()
 
 }
 
-bool Chess::Knight::validMove(const int row, const int column, GameObject(*board[dimension][dimension]))
+bool Chess::Knight::validMove(int row, int column, GameObject(*board[dimension][dimension]))
 {
 	return true;
+}
+
+std::vector< std::pair<int, int> > Chess::Knight::acquireMoves()
+{
+	std::vector< std::pair<int, int> > moves;
+
+
+
+
+	return moves;
 }
 
 Chess::Knight::~Knight()
@@ -132,7 +179,8 @@ Chess::Knight::~Knight()
 
 }
 // ===== Rook Class ===== //
-Chess::Rook::Rook(int newX, int newY, int newColor, char rep) : untouched(true), GameObject(newX, newY, newColor, rep)
+Chess::Rook::Rook(int newX, int newY, int newColor, char rep) 
+	: untouched(true), GameObject(newX, newY, newColor, rep)
 {
 
 }
@@ -143,9 +191,19 @@ void Chess::Rook::move()
 
 }
 
-bool Chess::Rook::validMove(const int row, const int column, GameObject(*board[dimension][dimension]))
+bool Chess::Rook::validMove(int row, int column, GameObject(*board[dimension][dimension]))
 {
 	return true;
+}
+
+std::vector< std::pair<int, int> > Chess::Rook::acquireMoves()
+{
+	std::vector< std::pair<int, int> > moves;
+
+
+
+
+	return moves;
 }
 
 Chess::Rook::~Rook()
@@ -153,7 +211,8 @@ Chess::Rook::~Rook()
 
 }
 // ===== Pawn Class ===== //
-Chess::Pawn::Pawn(int newX, int newY, int newColor, char rep) : untouched(true), enpassant(false), GameObject(newX, newY, newColor, rep)
+Chess::Pawn::Pawn(int newX, int newY, int newColor, char rep) 
+	: untouched(true), enpassant(false), GameObject(newX, newY, newColor, rep)
 {
 
 }
@@ -164,12 +223,27 @@ void Chess::Pawn::move()
 
 }
 
-bool Chess::Pawn::validMove(const int row, const int column, GameObject(*board[dimension][dimension]))
+bool Chess::Pawn::validMove(int row, int column, GameObject(*board[dimension][dimension]))
 {
-	// If Pawn hasn't been moved, then is able to jump 2 squares
-	
+	std::vector< std::pair<int, int> > moves = acquireMoves();
 
-	return true;
+	for (std::vector< std::pair<int, int> >::iterator it = moves.begin(); it != moves.end(); ++it)
+	{
+		if (it->first == row && it->second == column)
+			return true;
+	}
+
+	return false;
+}
+
+std::vector< std::pair<int, int> > Chess::Pawn::acquireMoves()
+{
+	std::vector< std::pair<int, int> > moves;
+
+
+
+
+	return moves;
 }
 
 Chess::Pawn::~Pawn()

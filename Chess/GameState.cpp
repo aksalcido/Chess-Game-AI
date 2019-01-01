@@ -44,7 +44,7 @@ void GameState::display() const
 
 	std::cout << " -------------------" << std::endl;
 
-	if (!GameOver)
+	if ( continuing() )
 		std::cout << "It is " << (turn == white ? "white's " : "black's ") << "turn to move!" << std::endl;
 }
 
@@ -58,9 +58,10 @@ bool GameState::inBounds(int row, int column)
 void GameState::initialize(Chess::GameObject(*board[dimension][dimension]))
 {
 	// Initializes a Local representation of the Chess board to place Chess Objects onto the board
-	char representation[dimension][dimension]{
+	char representation[dimension][dimension]
+	{
 		{ 'R', 'H', 'B', 'Q', 'K', 'B', 'H', 'R' },{ 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P' },{ '.', '.', '.', '.', '.', '.', '.', '.' },{ '.', '.', '.', '.', '.', '.', '.', '.' },
-	{ '.', '.', '.', '.', '.', '.', '.', '.' },{ '.', '.', '.', '.', '.', '.', '.', '.' },{ 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p' },{ 'r', 'h', 'b', 'k', 'q', 'b', 'h', 'r' },
+		{ '.', '.', '.', '.', '.', '.', '.', '.' },{ '.', '.', '.', '.', '.', '.', '.', '.' },{ 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p' },{ 'r', 'h', 'b', 'k', 'q', 'b', 'h', 'r' },
 	};
 
 	for (unsigned int i = 0; i < dimension; i++)
