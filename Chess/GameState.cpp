@@ -5,6 +5,11 @@ GameState::GameState() : turn(white), GameOver(false)
 	initialize(board);
 }
 
+void GameState::movement(int row, int col, int endRow, int endCol)
+{
+
+}
+
 bool GameState::validateMove(int row, int col, int endRow, int endCol)
 {
 	// Within Boundaries of the Board for Start/End Coordinates
@@ -48,12 +53,15 @@ void GameState::display() const
 		std::cout << "It is " << (turn == white ? "white's " : "black's ") << "turn to move!" << std::endl;
 }
 
+void GameState::displayMove(int startRow, int startColumn, int endRow, int endColumn)
+{
+	std::cout << "Move: (" << startRow << ", " << startColumn << ") -> (" << endRow << ", " << endColumn << ")" << std::endl;
+}
 
 bool GameState::inBounds(int row, int column)
 {
 	return (0 <= row && row < dimension) && (0 <= column && column < dimension);
 }
-
 
 void GameState::initialize(Chess::GameObject(*board[dimension][dimension]))
 {
@@ -73,51 +81,51 @@ void GameState::initialize(Chess::GameObject(*board[dimension][dimension]))
 			switch (square) {
 
 			case 'R':
-				board[i][j] = new Chess::Rook(j, i, black, square);
+				board[i][j] = new Chess::Rook(i, j, black, square);
 				break;
 
 			case 'r':
-				board[i][j] = new Chess::Rook(j, i, white, square);
+				board[i][j] = new Chess::Rook(i, j, white, square);
 				break;
 
 			case 'H':
-				board[i][j] = new Chess::Knight(j, i, black, square);
+				board[i][j] = new Chess::Knight(i, j, black, square);
 				break;
 
 			case 'h':
-				board[i][j] = new Chess::Knight(j, i, white, square);
+				board[i][j] = new Chess::Knight(i, j, white, square);
 				break;
 
 			case 'B':
-				board[i][j] = new Chess::Bishop(j, i, black, square);
+				board[i][j] = new Chess::Bishop(i, j, black, square);
 				break;
 
 			case 'b':
-				board[i][j] = new Chess::Bishop(j, i, white, square);
+				board[i][j] = new Chess::Bishop(i, j, white, square);
 				break;
 
 			case 'Q':
-				board[i][j] = new Chess::Queen(j, i, black, square);
+				board[i][j] = new Chess::Queen(i, j, black, square);
 				break;
 
 			case 'q':
-				board[i][j] = new Chess::Queen(j, i, white, square);
+				board[i][j] = new Chess::Queen(i, j, white, square);
 				break;
 
 			case 'K':
-				board[i][j] = new Chess::King(j, i, black, square);
+				board[i][j] = new Chess::King(i, j, black, square);
 				break;
 
 			case 'k':
-				board[i][j] = new Chess::King(j, i, white, square);
+				board[i][j] = new Chess::King(i, j, white, square);
 				break;
 
 			case 'P':
-				board[i][j] = new Chess::Pawn(j, i, black, square);
+				board[i][j] = new Chess::Pawn(i, j, black, square);
 				break;
 
 			case 'p':
-				board[i][j] = new Chess::Pawn(j, i, white, square);
+				board[i][j] = new Chess::Pawn(i, j, white, square);
 				break;
 
 			default:

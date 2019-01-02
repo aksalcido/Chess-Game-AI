@@ -3,20 +3,20 @@
 int main()
 {
 	GameState game;
-	int rowStart, columnStart, rowEnd, columnEnd;
+	int startRow, startColumn, endRow, endColumn;
 
 	while ( game.continuing() ) {
 		game.display();
 		std::cout << "Input your start & end row/column (ex: 3 1 5 6): ";
-		std::cin >> rowStart;
-		std::cin >> columnStart;
-		std::cin >> rowEnd;
-		std::cin >> columnEnd;
+		std::cin >> startRow;
+		std::cin >> startColumn;
+		std::cin >> endRow;
+		std::cin >> endColumn;
 
-		if (game.validateMove(rowStart, columnStart, rowEnd, columnEnd))
+		if (game.validateMove(startRow, startColumn, endRow, endColumn))
 		{
-			std::cout << "Move: (" << rowStart << ", " << columnStart << ") -> (" << rowEnd << ", " << columnEnd << ")" << std::endl;
-			
+			game.displayMove(startRow, startColumn, endRow, endColumn);
+			game.movement(startRow, startColumn, endRow, endColumn);
 		}
 		
 		else

@@ -45,6 +45,16 @@ void Chess::GameObject::changeCoordinates(const int row, const int column)
 	y = column;
 }
 
+bool Chess::GameObject::oppositePlayer(int other)
+{
+	return color != other;
+}
+
+bool Chess::GameObject::emptySpace(int dx, int dy, GameObject(*board[dimension][dimension]))
+{
+	return board[dx][dy] == nullptr;
+}
+
 Chess::GameObject::~GameObject()
 {
 
@@ -52,7 +62,7 @@ Chess::GameObject::~GameObject()
 
 // ===== King Class ===== //
 Chess::King::King(int newX, int newY, int newColor, char rep) 
-	: untouched(true), inCheck(false), GameObject(newX, newY, newColor, rep)
+	: hasNotMoved(true), inCheck(false), GameObject(newX, newY, newColor, rep)
 {
 
 }
@@ -67,7 +77,7 @@ bool Chess::King::validMove(int row, int column, GameObject(*board[dimension][di
 	return true;
 }
 
-std::vector< std::pair<int, int> > Chess::King::acquireMoves()
+std::vector< std::pair<int, int> > Chess::King::acquireMoves(GameObject(*board[dimension][dimension]))
 {
 	std::vector< std::pair<int, int> > moves;
 
@@ -100,7 +110,7 @@ bool Chess::Queen::validMove(int row, int column, GameObject(*board[dimension][d
 	return true;
 }
 
-std::vector< std::pair<int, int> > Chess::Queen::acquireMoves()
+std::vector< std::pair<int, int> > Chess::Queen::acquireMoves(GameObject(*board[dimension][dimension]))
 {
 	std::vector< std::pair<int, int> > moves;
 
@@ -132,7 +142,7 @@ bool Chess::Bishop::validMove(int row, int column, GameObject(*board[dimension][
 	return true;
 }
 
-std::vector< std::pair<int, int> > Chess::Bishop::acquireMoves()
+std::vector< std::pair<int, int> > Chess::Bishop::acquireMoves(GameObject(*board[dimension][dimension]))
 {
 	std::vector< std::pair<int, int> > moves;
 
@@ -164,7 +174,7 @@ bool Chess::Knight::validMove(int row, int column, GameObject(*board[dimension][
 	return true;
 }
 
-std::vector< std::pair<int, int> > Chess::Knight::acquireMoves()
+std::vector< std::pair<int, int> > Chess::Knight::acquireMoves(GameObject(*board[dimension][dimension]))
 {
 	std::vector< std::pair<int, int> > moves;
 
@@ -180,7 +190,7 @@ Chess::Knight::~Knight()
 }
 // ===== Rook Class ===== //
 Chess::Rook::Rook(int newX, int newY, int newColor, char rep) 
-	: untouched(true), GameObject(newX, newY, newColor, rep)
+	: hasNotMoved(true), GameObject(newX, newY, newColor, rep)
 {
 
 }
@@ -196,7 +206,7 @@ bool Chess::Rook::validMove(int row, int column, GameObject(*board[dimension][di
 	return true;
 }
 
-std::vector< std::pair<int, int> > Chess::Rook::acquireMoves()
+std::vector< std::pair<int, int> > Chess::Rook::acquireMoves(GameObject(*board[dimension][dimension]))
 {
 	std::vector< std::pair<int, int> > moves;
 
@@ -212,7 +222,7 @@ Chess::Rook::~Rook()
 }
 // ===== Pawn Class ===== //
 Chess::Pawn::Pawn(int newX, int newY, int newColor, char rep) 
-	: untouched(true), enpassant(false), GameObject(newX, newY, newColor, rep)
+	: hasNotMoved(true), enpassant(false), GameObject(newX, newY, newColor, rep)
 {
 
 }
@@ -225,7 +235,7 @@ void Chess::Pawn::move()
 
 bool Chess::Pawn::validMove(int row, int column, GameObject(*board[dimension][dimension]))
 {
-	std::vector< std::pair<int, int> > moves = acquireMoves();
+	std::vector< std::pair<int, int> > moves = acquireMoves(board);
 
 	for (std::vector< std::pair<int, int> >::iterator it = moves.begin(); it != moves.end(); ++it)
 	{
@@ -236,15 +246,49 @@ bool Chess::Pawn::validMove(int row, int column, GameObject(*board[dimension][di
 	return false;
 }
 
-std::vector< std::pair<int, int> > Chess::Pawn::acquireMoves()
+std::vector< std::pair<int, int> > Chess::Pawn::acquireMoves(GameObject(*board[dimension][dimension]))
 {
 	std::vector< std::pair<int, int> > moves;
 
-
-
+	forward(moves, board);
+	diagonal(moves, board);
 
 	return moves;
 }
+
+void Chess::Pawn::forward(std::vector< std::pair<int, int> > & moves, GameObject(*board[dimension][dimension]))
+{
+	int dx = (color == white ? -1 : 1);
+
+	// If Pawn has not moved yet, then capable of moving up two spaces
+	if (hasNotMoved && emptySpace(x + 2 * dx, y, board))
+	{
+		moves.push_back(std::make_pair(x + 2 * dx, y));
+	}
+
+	// Pawn can also move up one space as long as the space is not occupied
+	if (emptySpace(x + 1 * dx, y, board))
+	{
+		moves.push_back(std::make_pair(x + 1 * dx, y));
+	}
+}
+
+void Chess::Pawn::diagonal(std::vector< std::pair<int, int> > & moves, GameObject(*board[dimension][dimension]))
+{
+	int dx = x + (color == white ? -1 : 1);
+
+	// If the space is not empty and is occupied by an enemy, then it is possible for the Pawn to move there
+	if (!emptySpace(dx, y - 1, board) && oppositePlayer(board[dx][y - 1] -> pieceColor() ))
+	{
+		moves.push_back(std::make_pair(dx, y - 1));
+	}
+
+	if (!emptySpace(dx, y + 1, board) && oppositePlayer(board[dx][y + 1] -> pieceColor() ))
+	{
+		moves.push_back(std::make_pair(dx, y + 1));
+	}
+}
+
 
 Chess::Pawn::~Pawn()
 {

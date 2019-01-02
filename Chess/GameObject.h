@@ -30,7 +30,7 @@ namespace Chess
 		// Receives coordinates and the Board and returns a boolean if the move is valid. False otherwise
 		virtual bool validMove(int row, int column, GameObject(*board[dimension][dimension])) = 0;
 
-		virtual std::vector< std::pair<int, int> > acquireMoves() = 0;
+		virtual std::vector< std::pair<int, int> > acquireMoves(GameObject(*board[dimension][dimension])) = 0;
 
 		// Returns the char representation of the piece to display to the user
 		char displayPiece();
@@ -41,11 +41,14 @@ namespace Chess
 		// Changes x, y coordinates when piece is moved
 		void changeCoordinates(const int row, const int column);
 
+		bool oppositePlayer(int other);
+
+		bool emptySpace(int dx, int dy, GameObject(*board[dimension][dimension]));
 
 		// Destructor for the GameObject
 		~GameObject();
 
-	private:
+	protected:
 		int x, y, color;
 		char representation;
 
@@ -60,12 +63,12 @@ namespace Chess
 
 		bool validMove(int row, int column, GameObject(*board[dimension][dimension])) override;
 
-		std::vector< std::pair<int, int> > acquireMoves() override;
+		std::vector< std::pair<int, int> > acquireMoves(GameObject(*board[dimension][dimension])) override;
 
 		~King();
 	
 	private:
-		bool untouched, inCheck;
+		bool hasNotMoved, inCheck;
 	};
 
 	class Queen : public GameObject
@@ -77,7 +80,7 @@ namespace Chess
 
 		bool validMove(int row, int column, GameObject(*board[dimension][dimension])) override;
 
-		std::vector< std::pair<int, int> > acquireMoves() override;
+		std::vector< std::pair<int, int> > acquireMoves(GameObject(*board[dimension][dimension])) override;
 
 		~Queen();
 	};
@@ -91,7 +94,7 @@ namespace Chess
 
 		bool validMove(int row, int column, GameObject(*board[dimension][dimension])) override;
 
-		std::vector< std::pair<int, int> > acquireMoves() override;
+		std::vector< std::pair<int, int> > acquireMoves(GameObject(*board[dimension][dimension])) override;
 
 		~Bishop();
 	};
@@ -105,7 +108,7 @@ namespace Chess
 
 		bool validMove(int row, int column, GameObject(*board[dimension][dimension])) override;
 
-		std::vector< std::pair<int, int> > acquireMoves() override;
+		std::vector< std::pair<int, int> > acquireMoves(GameObject(*board[dimension][dimension])) override;
 
 		~Knight();
 	};
@@ -119,11 +122,11 @@ namespace Chess
 
 		bool validMove(int row, int column, GameObject(*board[dimension][dimension])) override;
 		
-		std::vector< std::pair<int, int> > acquireMoves() override;
+		std::vector< std::pair<int, int> > acquireMoves(GameObject(*board[dimension][dimension])) override;
 
 		~Rook();
 	private:
-		bool untouched;
+		bool hasNotMoved;
 
 	};
 
@@ -136,12 +139,16 @@ namespace Chess
 
 		bool validMove(int row, int column, GameObject(*board[dimension][dimension])) override;
 
-		std::vector< std::pair<int, int> > acquireMoves() override;
+		std::vector< std::pair<int, int> > acquireMoves(GameObject(*board[dimension][dimension])) override;
+
+		void diagonal(std::vector< std::pair<int, int> > & moves, GameObject(*board[dimension][dimension]));
+
+		void forward(std::vector< std::pair<int, int> > & moves, GameObject(*board[dimension][dimension]));
 
 		~Pawn();
 
 	private:
-		bool untouched, enpassant;
+		bool hasNotMoved, enpassant;
 
 	};
 
