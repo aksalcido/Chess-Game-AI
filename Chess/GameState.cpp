@@ -1,11 +1,11 @@
 #include "GameState.h"
 
-GameState::GameState() : turn(white), GameOver(false)
+Chess::GameState::GameState() : turn(white), GameOver(false)
 {
 
 }
 
-void GameState::movement(int row, int col, int endRow, int endCol)
+void Chess::GameState::movement(int row, int col, int endRow, int endCol)
 {
 	if (ChessBoard.emptySpace(endRow, endCol))
 	{
@@ -21,7 +21,7 @@ void GameState::movement(int row, int col, int endRow, int endCol)
 
 }
 
-bool GameState::validateMove(int row, int col, int endRow, int endCol)
+bool Chess::GameState::validateMove(int row, int col, int endRow, int endCol)
 {
 	// Within Boundaries of the Board for Start/End Coordinates
 	if (ChessBoard.inBounds(row, col) && ChessBoard.inBounds(endRow, endCol)) {
@@ -35,12 +35,12 @@ bool GameState::validateMove(int row, int col, int endRow, int endCol)
 	return false;
 }
 
-bool GameState::continuing() const
+bool Chess::GameState::continuing() const
 {
 	return !GameOver;
 }
 
-void GameState::display() const
+void Chess::GameState::display() const
 {
 	std::cout << "   0 1 2 3 4 5 6 7\n -------------------" << std::endl;
 
@@ -64,13 +64,13 @@ void GameState::display() const
 		std::cout << "It is " << (turn == white ? "white's " : "black's ") << "turn to move!" << std::endl;
 }
 
-void GameState::displayMove(int startRow, int startColumn, int endRow, int endColumn)
+void Chess::GameState::displayMove(int startRow, int startColumn, int endRow, int endColumn)
 {
 	std::cout << "Move: (" << startRow << ", " << startColumn << ") -> (" << endRow << ", " << endColumn << ")" << std::endl;
 }
 
 
-GameState::~GameState()
+Chess::GameState::~GameState()
 {
 
 }

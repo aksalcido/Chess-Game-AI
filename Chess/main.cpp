@@ -3,7 +3,7 @@
 int main()
 {
 	// Initializes a GameState of the Chess Game
-	GameState game;
+	Chess::GameState game;
 
 	// Initializes the variables to store user input
 	int startRow, startColumn, endRow, endColumn;

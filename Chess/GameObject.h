@@ -6,11 +6,11 @@
 #define black 1
 #define dimension 8
 
-// Forward Declaration of Board
-class Board;
-
 namespace Chess 
 {
+	// Forward Declaration of Board
+	class Board;
+
 	struct Direction {
 		int dx, dy;
 	};
@@ -64,107 +64,7 @@ namespace Chess
 		bool hasNotMoved;
 		std::vector<Direction> directions;
 	};
-
-	class King : public GameObject
-	{
-	public:
-		King(int newX, int newY, int newColor, char rep);
-
-		void move() override;
-
-		bool validMove(int row, int column, Board * ChessBoard) override;
-
-		std::vector< std::pair<int, int> > acquireMoves(Board * ChessBoard) override;
-
-		~King();
-	
-	private:
-		bool inCheck;
-	};
-
-	class Queen : public GameObject
-	{
-	public:
-		Queen(int newX, int newY, int newColor, char rep);
-
-		void move() override;
-
-		bool validMove(int row, int column, Board * ChessBoard) override;
-
-		std::vector< std::pair<int, int> > acquireMoves(Board * ChessBoard) override;
-
-		~Queen();
-	};
-
-	class Bishop : public GameObject
-	{
-	public:
-		Bishop(int newX, int newY, int newColor, char rep);
-
-		void move() override;
-
-		bool validMove(int row, int column, Board * ChessBoard) override;
-
-		std::vector< std::pair<int, int> > acquireMoves(Board * ChessBoard) override;
-
-		~Bishop();
-	};
-
-	class Knight : public GameObject
-	{
-	public:
-		Knight(int newX, int newY, int newColor, char rep);
-
-		void move() override;
-
-		bool validMove(int row, int column, Board * ChessBoard) override;
-
-		std::vector< std::pair<int, int> > acquireMoves(Board * ChessBoard) override;
-
-		void jump(std::vector< std::pair<int, int> > & moves, Board * ChessBoard);
-
-		~Knight();
-
-	};
-
-	class Rook : public GameObject
-	{
-	public:
-		Rook(int newX, int newY, int newColor, char rep);
-
-		void move() override;
-
-		bool validMove(int row, int column, Board * ChessBoard) override;
-		
-		std::vector< std::pair<int, int> > acquireMoves(Board * ChessBoard) override;
-
-		~Rook();
-
-	};
-
-	class Pawn : public GameObject
-	{
-	public:
-		Pawn(int newX, int newY, int newColor, char rep);
-
-		void move() override;
-
-		// Overrided validMove from base class GameObject, and returns a boolean if the row, column arguments are a valid move on the current Board.
-		bool validMove(int row, int column, Board * ChessBoard) override;
-
-		std::vector< std::pair<int, int> > acquireMoves(Board * ChessBoard) override;
-
-		void diagonal(std::vector< std::pair<int, int> > & moves, Board * ChessBoard);
-
-		void forward(std::vector< std::pair<int, int> > & moves, Board * ChessBoard);
-
-		~Pawn();
-
-	private:
-		bool enpassant;
-
-	};
-
 };
 
+#include "Board.h"
 #endif // GAMEOBJECT_H
