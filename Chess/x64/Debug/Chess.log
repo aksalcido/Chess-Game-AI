@@ -1,5 +1,8 @@
-﻿  main.cpp
+﻿  GameObject.cpp
+  Generating Code...
+  Compiling...
+  main.cpp
   GameState.cpp
-  GameObject.cpp
+  Board.cpp
   Generating Code...
   Chess.vcxproj -> C:\Users\Armando\Desktop\Coding Files\VisualStudio Projects\C++\Projects\Chess\Chess-Game-AI\x64\Debug\Chess.exe
