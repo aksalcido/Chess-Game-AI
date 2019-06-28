@@ -10,13 +10,12 @@ namespace Chess {
 	public:
 		Queen(int newX, int newY, int newColor, char rep);
 
-		void move() override;
-
-		bool validMove(int row, int column, Board * ChessBoard) override;
-
 		std::vector< std::pair<int, int> > acquireMoves(Board * ChessBoard) override;
 
+		void mobility(std::vector< std::pair<int, int> > & moves, Board * ChessBoard);
+
 		~Queen();
+
 	};
 };
 

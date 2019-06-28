@@ -26,7 +26,13 @@ namespace Chess {
 		// Updates the coordinates of a newly moved piece to the arguments newRow and newCol
 		void updateCoordinates(int newRow, int newCol);
 
+		// Checks if the piece has moved, if so changes the boolean hasNotMoved for that piece to false
 		void firstMoveCheck(int row, int col);
+
+		// Checks if castling has occured on the board
+		void castlingCheck(int row, int col);
+
+		bool pieceHasNotMoved(int row, int col);
 
 		// Returns a boolean True if the move from start -> end is a valid move that can be made. False otherwise
 		bool validMove(int row, int col, int endRow, int endCol);
@@ -44,6 +50,8 @@ namespace Chess {
 
 		// Returnsa boolean True if the row and column argument remain in bounds on the board. False otherwise
 		bool inBounds(int row, int column) const;
+
+		std::vector< std::pair<int, int> > allMoves(int color);
 
 		// Destructor for the Board Object, releases left over pieces that remain on the board after game is over
 		~Board();

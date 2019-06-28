@@ -10,16 +10,20 @@ namespace Chess {
 	public:
 		King(int newX, int newY, int newColor, char rep);
 
-		void move() override;
-
-		bool validMove(int row, int column, Board * ChessBoard) override;
+		bool recentlyCastled();
 
 		std::vector< std::pair<int, int> > acquireMoves(Board * ChessBoard) override;
+
+		void limitedMobility(std::vector< std::pair<int, int> > & moves, Board * ChessBoard);
+
+		void castling(std::vector< std::pair<int, int> > & moves, Board * ChessBoard);
 
 		~King();
 
 	private:
 		bool inCheck;
+		std::pair<int, int> castlingPosition;
+
 	};
 };
 

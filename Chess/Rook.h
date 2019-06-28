@@ -10,12 +10,10 @@ namespace Chess {
 	public:
 		Rook(int newX, int newY, int newColor, char rep);
 
-		void move() override;
-
-		bool validMove(int row, int column, Board * ChessBoard) override;
-
 		std::vector< std::pair<int, int> > acquireMoves(Board * ChessBoard) override;
-
+		
+		void lateral(std::vector< std::pair<int, int > > & moves, Board * ChessBoard);
+		
 		~Rook();
 
 	};

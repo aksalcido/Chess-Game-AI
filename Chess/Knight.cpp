@@ -10,25 +10,6 @@ Chess::Knight::Knight(int newX, int newY, int newColor, char rep)
 	};
 }
 
-
-void Chess::Knight::move()
-{
-
-}
-
-bool Chess::Knight::validMove(int row, int column, Board * ChessBoard)
-{
-	std::vector< std::pair<int, int> > moves = acquireMoves(ChessBoard);
-
-	for (std::vector< std::pair<int, int> >::iterator it = moves.begin(); it != moves.end(); ++it)
-	{
-		if (it->first == row && it->second == column)
-			return true;
-	}
-
-	return false;
-}
-
 std::vector< std::pair<int, int> > Chess::Knight::acquireMoves(Board * ChessBoard)
 {
 	std::vector< std::pair<int, int> > moves;

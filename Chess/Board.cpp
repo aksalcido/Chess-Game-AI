@@ -10,12 +10,6 @@ Chess::Board::Board()
 
 void Chess::Board::movementToEmptySquare(int row, int col, int endRow, int endCol)
 {
-	// DEBUG
-	if (DEBUG) {
-		std::pair<int, int> coords = board[row][col]->getCoordinates();
-		std::cout << "x: " << coords.first << " y: " << coords.second << std::endl;
-	}
-
 	std::swap(board[row][col], board[endRow][endCol]);
 }
 
@@ -30,12 +24,6 @@ void Chess::Board::movementToEnemy(int row, int col, int endRow, int endCol)
 void Chess::Board::updateCoordinates(int newRow, int newCol)
 {
 	board[newRow][newCol]->changeCoordinates(newRow, newCol);
-
-	// DEBUG
-	if (DEBUG) {
-		std::pair<int, int> coords = board[newRow][newCol]->getCoordinates();
-		std::cout << "x: " << coords.first << " y: " << coords.second << std::endl;
-	}
 }
 
 void Chess::Board::firstMoveCheck(int row, int col)
@@ -43,14 +31,21 @@ void Chess::Board::firstMoveCheck(int row, int col)
 	board[row][col]->firstMoveOccured();
 }
 
+void Chess::Board::castlingCheck(int row, int col)
+{
+	if (pieceHasNotMoved(row, col) && (board[row][col] -> displayPiece() == 'K' || 'k') && (col == dimension - 2))
+	{
+		std::swap(board[row][col - 1], board[row][col + 1]);
+	}
+}
+
+bool Chess::Board::pieceHasNotMoved(int row, int col)
+{
+	return board[row][col]->initialPosition();
+}
+
 bool Chess::Board::validMove(int row, int col, int endRow, int endCol)
 {
-	// DEBUG
-	if (DEBUG) {
-		std::pair<int, int> coords = board[row][col]->getCoordinates();
-		std::cout << "x: " << coords.first << " y: " << coords.second << std::endl;
-	}
-
 	return board[row][col] -> validMove(endRow, endCol, this);
 }
 
@@ -85,7 +80,7 @@ void Chess::Board::initialize(GameObject(*board[dimension][dimension]))
 	char representation[dimension][dimension]
 	{
 		{ 'R', 'H', 'B', 'Q', 'K', 'B', 'H', 'R' },{ 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P' },{ '.', '.', '.', '.', '.', '.', '.', '.' },{ '.', '.', '.', '.', '.', '.', '.', '.' },
-	{ '.', '.', '.', '.', '.', '.', '.', '.' },{ '.', '.', '.', '.', '.', '.', '.', '.' },{ 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p' },{ 'r', 'h', 'b', 'k', 'q', 'b', 'h', 'r' },
+		{ '.', '.', '.', '.', '.', '.', '.', '.' },{ '.', '.', '.', '.', '.', '.', '.', '.' },{ 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p' },{ 'r', 'h', 'b', 'q', 'k', 'b', 'h', 'r' },
 	};
 
 	for (unsigned int i = 0; i < dimension; i++)

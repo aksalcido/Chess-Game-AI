@@ -12,7 +12,11 @@ namespace Chess {
 		// Default Constructor for the Chess GameState Class
 		GameState();
 
+		void progress(int row, int col, int endRow, int endCol);
+
 		void movement(int row, int col, int endRow, int endCol);
+
+		void nextTurn();
 
 		// Returns a Boolean in regards to if the move is a valid for the GameState, false otherwise.
 		bool validateMove(int row, int col, int endRow, int endCol);
@@ -33,6 +37,12 @@ namespace Chess {
 		Board ChessBoard;
 		int turn;
 		bool GameOver;
+
+		// Returns a Boolean whether the coordinates (row, col) and (endRow, endCol) are on the board
+		bool playersMoveOnBoard(int row, int col, int endRow, int endCol) const;
+
+		// Returns a Boolean whether the Start Position is a GameObject and the start (row, col) must be the Player's piece
+		bool isPlayersPiece(int row, int col) const;
 
 	};
 };

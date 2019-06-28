@@ -10,11 +10,6 @@ namespace Chess {
 	public:
 		Pawn(int newX, int newY, int newColor, char rep);
 
-		void move() override;
-
-		// Overrided validMove from base class GameObject, and returns a boolean if the row, column arguments are a valid move on the current Board.
-		bool validMove(int row, int column, Board * ChessBoard) override;
-
 		std::vector< std::pair<int, int> > acquireMoves(Board * ChessBoard) override;
 
 		void diagonal(std::vector< std::pair<int, int> > & moves, Board * ChessBoard);

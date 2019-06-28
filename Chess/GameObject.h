@@ -31,15 +31,15 @@ namespace Chess
 		// Overloaded = operator for cases where GameObject is copied 
 		GameObject & operator=(const GameObject & piece);
 
-		virtual void move() = 0;
-		
-		// Receives coordinates and the Board and returns a boolean if the move is valid. False otherwise
-		virtual bool validMove(int row, int column, Board * ChessBoard) = 0;
-
 		virtual std::vector< std::pair<int, int> > acquireMoves(Board * ChessBoard) = 0;
+
+		// Receives coordinates and the Board and returns a boolean if the move is valid. False otherwise
+		bool validMove(int row, int column, Board * ChessBoard);
 
 		// Returns a pair of the coordinates of the piece
 		std::pair<int, int> getCoordinates();
+
+		bool initialPosition();
 
 		// Returns the char representation of the piece to display to the user
 		char displayPiece();
@@ -63,6 +63,8 @@ namespace Chess
 		char representation;
 		bool hasNotMoved;
 		std::vector<Direction> directions;
+		std::vector<std::pair<int, int>> moves;
+
 	};
 };
 

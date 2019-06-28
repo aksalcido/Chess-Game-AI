@@ -23,7 +23,7 @@ int main()
 		if (game.validateMove(startRow, startColumn, endRow, endColumn))
 		{
 			game.displayMove(startRow, startColumn, endRow, endColumn);
-			game.movement(startRow, startColumn, endRow, endColumn);
+			game.progress(startRow, startColumn, endRow, endColumn);
 			game.display();
 		}
 		// Otherwise informs the user that the move is invalid

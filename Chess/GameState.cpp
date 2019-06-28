@@ -5,6 +5,17 @@ Chess::GameState::GameState() : turn(white), GameOver(false)
 
 }
 
+void Chess::GameState::progress(int row, int col, int endRow, int endCol)
+{
+	movement(row, col, endRow, endCol);
+
+	ChessBoard.castlingCheck(endRow, endCol);
+	ChessBoard.firstMoveCheck(endRow, endCol);
+	ChessBoard.updateCoordinates(endRow, endCol);
+
+	nextTurn();
+}
+
 void Chess::GameState::movement(int row, int col, int endRow, int endCol)
 {
 	if (ChessBoard.emptySpace(endRow, endCol))
@@ -15,21 +26,18 @@ void Chess::GameState::movement(int row, int col, int endRow, int endCol)
 	{
 		ChessBoard.movementToEnemy(row, col, endRow, endCol);
 	}
+}
 
-	ChessBoard.firstMoveCheck(endRow, endCol);
-	ChessBoard.updateCoordinates(endRow, endCol);
-
+void Chess::GameState::nextTurn()
+{
+	turn = (turn == white ? black : white);
 }
 
 bool Chess::GameState::validateMove(int row, int col, int endRow, int endCol)
 {
-	// Within Boundaries of the Board for Start/End Coordinates
-	if (ChessBoard.inBounds(row, col) && ChessBoard.inBounds(endRow, endCol)) {
-
-		// Start Position must be a GameObject
-		if (!ChessBoard.emptySpace(row, col) && ChessBoard.pieceColor(row, col) == turn) {
-			return ChessBoard.validMove(row, col, endRow, endCol);
-		}
+	// Checks if the coordinates are on the board and if so whether the start coordinates are the player's piece
+	if (playersMoveOnBoard(row, col, endRow, endCol) && isPlayersPiece(row, col)) {
+		return ChessBoard.validMove(row, col, endRow, endCol);
 	}
 
 	return false;
@@ -38,6 +46,16 @@ bool Chess::GameState::validateMove(int row, int col, int endRow, int endCol)
 bool Chess::GameState::continuing() const
 {
 	return !GameOver;
+}
+
+bool Chess::GameState::playersMoveOnBoard(int row, int col, int endRow, int endCol) const
+{
+	return ChessBoard.inBounds(row, col) && ChessBoard.inBounds(endRow, endCol);
+}
+
+bool Chess::GameState::isPlayersPiece(int row, int col) const
+{
+	return !ChessBoard.emptySpace(row, col) && ChessBoard.pieceColor(row, col) == turn;
 }
 
 void Chess::GameState::display() const

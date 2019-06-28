@@ -30,9 +30,29 @@ Chess::GameObject& Chess::GameObject::operator=(const Chess::GameObject & piece)
 	return *this;
 }
 
+
+bool Chess::GameObject::validMove(int row, int column, Board * ChessBoard)
+{
+	moves = acquireMoves(ChessBoard);
+
+	for (std::vector< std::pair<int, int> >::iterator it = moves.begin(); it != moves.end(); ++it)
+	{
+		if (it->first == row && it->second == column)
+			return true;
+	}
+
+	return false;
+}
+
+
 std::pair<int, int> Chess::GameObject::getCoordinates()
 {
 	return std::make_pair(x, y);
+}
+
+bool Chess::GameObject::initialPosition()
+{
+	return hasNotMoved;
 }
 
 char Chess::GameObject::displayPiece()

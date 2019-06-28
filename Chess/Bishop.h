@@ -10,13 +10,12 @@ namespace Chess {
 	public:
 		Bishop(int newX, int newY, int newColor, char rep);
 
-		void move() override;
-
-		bool validMove(int row, int column, Board * ChessBoard) override;
-
 		std::vector< std::pair<int, int> > acquireMoves(Board * ChessBoard) override;
+		
+		void diagonal(std::vector< std::pair<int, int> > & moves, Board * ChessBoard);
 
 		~Bishop();
+
 	};
 };
 
