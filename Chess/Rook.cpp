@@ -11,13 +11,13 @@ Chess::Rook::Rook(int newX, int newY, int newColor, char rep)
 
 std::vector< std::pair<int, int> > Chess::Rook::acquireMoves(Board * ChessBoard)
 {
-	std::vector< std::pair<int, int> > moves;
-	lateral(moves, ChessBoard);
+	moves.clear();
+	lateral(ChessBoard);
 
 	return moves;
 }
 
-void Chess::Rook::lateral(std::vector< std::pair<int, int > > & moves, Board * ChessBoard)
+void Chess::Rook::lateral(Board * ChessBoard)
 {
 	int dx, dy;
 

@@ -11,13 +11,13 @@ Chess::Bishop::Bishop(int newX, int newY, int newColor, char rep)
 
 std::vector< std::pair<int, int> > Chess::Bishop::acquireMoves(Board * ChessBoard)
 {
-	std::vector< std::pair<int, int> > moves;
-	diagonal(moves, ChessBoard);
+	moves.clear();
+	diagonal(ChessBoard);
 
 	return moves;
 }
 
-void Chess::Bishop::diagonal(std::vector< std::pair<int, int> > & moves, Board * ChessBoard)
+void Chess::Bishop::diagonal(Board * ChessBoard)
 {
 	int dx, dy;
 

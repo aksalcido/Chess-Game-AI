@@ -19,16 +19,17 @@ bool Chess::King::inCheck()
 
 std::vector< std::pair<int, int> > Chess::King::acquireMoves(Board * ChessBoard)
 {
-	std::vector< std::pair<int, int> > moves;
-	limitedMobility(moves, ChessBoard);
+	moves.clear();
+
+	limitedMobility(ChessBoard);
 	
 	if (hasNotMoved)
-		castling(moves, ChessBoard);
+		castling(ChessBoard);
 
 	return moves;
 }
 
-void Chess::King::limitedMobility(std::vector< std::pair<int, int> > & moves, Board * ChessBoard)
+void Chess::King::limitedMobility(Board * ChessBoard)
 {
 	int dx, dy;
 
@@ -44,7 +45,7 @@ void Chess::King::limitedMobility(std::vector< std::pair<int, int> > & moves, Bo
 	}
 }
 
-void Chess::King::castling(std::vector< std::pair<int, int> > & moves, Board * ChessBoard)
+void Chess::King::castling(Board * ChessBoard)
 {
 	// Rook Coordinate
 	int rx = (color == white ? dimension - 1 : 0);
@@ -57,7 +58,16 @@ void Chess::King::castling(std::vector< std::pair<int, int> > & moves, Board * C
 	}
 }
 
-void Chess::King::checkForEnemies(Board * ChessBoard)
+void Chess::King::checkedStatus(Board * ChessBoard)
+{
+	// Local Boolean to check if a check occured during the last turn, that way 'checked' can be changed between true or false for each turn
+	bool currentlyChecked = false;
+	checkForEnemies(ChessBoard, currentlyChecked);
+	checkForKnights(ChessBoard, currentlyChecked);
+	checked = currentlyChecked;
+}
+
+void Chess::King::checkForEnemies(Board * ChessBoard, bool & currentlyChecked)
 {
 	int dx, dy;
 
@@ -79,23 +89,42 @@ void Chess::King::checkForEnemies(Board * ChessBoard)
 				
 				// Meaning there is a GameObject in the way -- Check if Enemy or Ally
 				else {
-
 					// If Enemy GameObject and can attack the King, then checked becomes True
 					if (ChessBoard->enemySpace(x, y, x + dx, y + dy) && ChessBoard->enemyCheckingKing(x + dx, y + dy, x, y))
 					{
-						checked = true;
+						currentlyChecked = true;
 					}
 
 					break; // Break because a GameObject being in the King's Path will block other pieces from attacking the King
 				}
 
 			}
-
-			else {
-				break;
-			}
+			
+			break; // Break because if the coordinates (dx, dy) are out of bounds then being checked from that Direction is impossible
 		}
 	}
+}
+
+void Chess::King::checkForKnights(Board * ChessBoard, bool & currentlyChecked)
+{
+	int dx, dy;
+
+	std::vector<Direction> possibleKnights
+	{ 
+		Direction{ -2, -1 }, Direction{ -1, -2 }, Direction{ 1, -2 }, Direction{ 2, -1 },
+		Direction{ -2, 1 }, Direction{ -1, 2 }, Direction{ 1, 2 }, Direction{ 2, 1 } 
+	};
+	
+	for (int d = 0; d < possibleKnights.size(); d++)
+	{
+		dx = possibleKnights[d].dx;
+		dy = possibleKnights[d].dy;
+
+		// If Enemy Knight is in the coordinates of the directions then the King is placed into check
+		if (ChessBoard->enemySpace(x, y, x + dx, y + dy) && ChessBoard->piece(x + dx, y + dy) == 'H' | 'h')
+			currentlyChecked = true;
+	}
+
 }
 
 

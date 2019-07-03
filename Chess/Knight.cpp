@@ -12,13 +12,13 @@ Chess::Knight::Knight(int newX, int newY, int newColor, char rep)
 
 std::vector< std::pair<int, int> > Chess::Knight::acquireMoves(Board * ChessBoard)
 {
-	std::vector< std::pair<int, int> > moves;
-	jump(moves, ChessBoard);
+	moves.clear();
+	jump(ChessBoard);
 
 	return moves;
 }
 
-void Chess::Knight::jump(std::vector< std::pair<int, int> > & moves, Board * ChessBoard)
+void Chess::Knight::jump(Board * ChessBoard)
 {
 	int dx, dy;
 

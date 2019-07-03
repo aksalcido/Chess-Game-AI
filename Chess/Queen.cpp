@@ -13,15 +13,15 @@ Chess::Queen::Queen(int newX, int newY, int newColor, char rep)
 
 std::vector< std::pair<int, int> > Chess::Queen::acquireMoves(Board * ChessBoard)
 {
-	std::vector< std::pair<int, int> > moves;
-	mobility(moves, ChessBoard);
+	moves.clear();
+	mobility(ChessBoard);
 
 	return moves;
 }
 
 #include <iostream>
 
-void Chess::Queen::mobility(std::vector< std::pair<int, int>> & moves, Board * ChessBoard)
+void Chess::Queen::mobility(Board * ChessBoard)
 {
 	int dx, dy;
 

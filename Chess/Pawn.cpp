@@ -8,15 +8,15 @@ Chess::Pawn::Pawn(int newX, int newY, int newColor, char rep)
 
 std::vector< std::pair<int, int> > Chess::Pawn::acquireMoves(Board * ChessBoard)
 {
-	std::vector< std::pair<int, int> > moves;
+	moves.clear();
 
-	forward(moves, ChessBoard);
-	diagonal(moves, ChessBoard);
+	forward(ChessBoard);
+	diagonal(ChessBoard);
 
 	return moves;
 }
 
-void Chess::Pawn::forward(std::vector< std::pair<int, int> > & moves, Board * ChessBoard)
+void Chess::Pawn::forward(Board * ChessBoard)
 {
 	int dx = (color == white ? -1 : 1);
 
@@ -33,7 +33,7 @@ void Chess::Pawn::forward(std::vector< std::pair<int, int> > & moves, Board * Ch
 	}
 }
 
-void Chess::Pawn::diagonal(std::vector< std::pair<int, int> > & moves, Board * ChessBoard)
+void Chess::Pawn::diagonal(Board * ChessBoard)
 {
 	int dx = x + (color == white ? -1 : 1);
 

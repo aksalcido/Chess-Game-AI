@@ -11,5 +11,13 @@
 6 5 4 5
 1 2 2 2
 4 5 3 4
+
+
+0 2 1 1
+6 7 4 7
+
 0 3 2 1
 // move above puts king in check //
+
+7 6 6 7
+/// move above puts king out of check //

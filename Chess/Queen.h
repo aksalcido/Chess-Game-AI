@@ -8,14 +8,17 @@ namespace Chess {
 	class Queen : public GameObject
 	{
 	public:
+		// Queen Constructor that assigns the coordinate values with respective color and char representation for the GameObject
 		Queen(int newX, int newY, int newColor, char rep);
 
+		// Returns a vector of pairs of each possible move that can be made on the Board for the Queen
 		std::vector< std::pair<int, int> > acquireMoves(Board * ChessBoard) override;
 
-		void mobility(std::vector< std::pair<int, int> > & moves, Board * ChessBoard);
-
 		~Queen();
-
+	
+	private:
+		// Handles all movement that the Queen can make on the Board. Adds each possible move as a pair of (row, column) to the 'moves' vector.
+		void mobility(Board * ChessBoard);
 	};
 };
 
