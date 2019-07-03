@@ -15,6 +15,7 @@ void Chess::Board::movementToEmptySquare(int row, int col, int endRow, int endCo
 
 void Chess::Board::movementToEnemy(int row, int col, int endRow, int endCol)
 {
+	updatePieces(board[endRow][endCol]);
 	delete board[endRow][endCol];
 	board[endRow][endCol] = nullptr;
 
@@ -24,6 +25,9 @@ void Chess::Board::movementToEnemy(int row, int col, int endRow, int endCol)
 void Chess::Board::updateCoordinates(int newRow, int newCol)
 {
 	board[newRow][newCol]->changeCoordinates(newRow, newCol);
+
+	((King*)whiteKing)->checkForEnemies(this);
+	std::cout << " whiteKing in Check: " << (((King*)whiteKing)->inCheck() ? "True" : "False") << std::endl;
 }
 
 void Chess::Board::firstMoveCheck(int row, int col)
@@ -49,14 +53,14 @@ bool Chess::Board::validMove(int row, int col, int endRow, int endCol)
 	return board[row][col] -> validMove(endRow, endCol, this);
 }
 
-char Chess::Board::piece(int x, int y) const
+char Chess::Board::piece(int row, int col) const
 {
-	return board[x][y] -> displayPiece();
+	return board[row][col] -> displayPiece();
 }
 
-int Chess::Board::pieceColor(int x, int y) const
+int Chess::Board::pieceColor(int row, int col) const
 {
-	return board[x][y] -> pieceColor();
+	return board[row][col] -> pieceColor();
 }
 
 bool Chess::Board::emptySpace(int dx, int dy) const
@@ -69,9 +73,30 @@ bool Chess::Board::enemySpace(int row, int col, int dx, int dy) const
 	return (inBounds(dx, dy) ? (!emptySpace(dx, dy) && board[row][col]->oppositePlayer(pieceColor(dx, dy))) : false);
 }
 
-bool Chess::Board::inBounds(int row, int column) const
+bool Chess::Board::enemyCheckingKing(int enemyRow, int enemyCol, int kingRow, int kingCol)
 {
-	return (0 <= row && row < dimension) && (0 <= column && column < dimension);
+	return board[enemyRow][enemyCol]->canAttackEnemy(kingRow, kingCol, this);
+}
+
+bool Chess::Board::inBounds(int row, int col) const
+{
+	return (0 <= row && row < dimension) && (0 <= col && col < dimension);
+}
+
+void Chess::Board::updatePieces(GameObject * pieceBeingRemoved)
+{
+	std::vector<GameObject*> * container = &(pieceBeingRemoved->pieceColor() == white ? whitePieces : blackPieces);
+
+	for (int i = 0; i < container -> size(); i++)
+	{
+		if ((*container)[i] == pieceBeingRemoved)
+		{
+			container -> erase((*container).begin() + i);
+		}
+	}
+
+	std::cout << "WhitePieces.size(): " << whitePieces.size() << std::endl;
+	std::cout << "BlackPieces.size(): " << blackPieces.size() << std::endl;
 }
 
 void Chess::Board::initialize(GameObject(*board[dimension][dimension]))
@@ -125,10 +150,12 @@ void Chess::Board::initialize(GameObject(*board[dimension][dimension]))
 
 			case 'K':
 				board[i][j] = new King(i, j, black, square);
+				blackKing = board[i][j];
 				break;
 
 			case 'k':
 				board[i][j] = new King(i, j, white, square);
+				whiteKing = board[i][j];
 				break;
 
 			case 'P':
@@ -143,6 +170,17 @@ void Chess::Board::initialize(GameObject(*board[dimension][dimension]))
 				board[i][j] = nullptr;
 				break;
 			}
+
+			if (board[i][j] != nullptr && board[i][j]->pieceColor() == black)
+			{
+				blackPieces.push_back(board[i][j]);
+			}
+
+			else if (board[i][j] != nullptr && board[i][j]->pieceColor() == white)
+			{
+				whitePieces.push_back(board[i][j]);
+			}
+
 		}
 	}
 }

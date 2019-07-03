@@ -2,6 +2,7 @@
 #define GAMEOBJECT_H
 #pragma once
 #include <vector>
+#include "Direction.h"
 #define white 0
 #define black 1
 #define dimension 8
@@ -10,10 +11,6 @@ namespace Chess
 {
 	// Forward Declaration of Board
 	class Board;
-
-	struct Direction {
-		int dx, dy;
-	};
 
 	class GameObject
 	{
@@ -39,6 +36,7 @@ namespace Chess
 		// Returns a pair of the coordinates of the piece
 		std::pair<int, int> getCoordinates();
 
+		// Returns a boolean True if a GameObject has not been moved yet, otherwise False
 		bool initialPosition();
 
 		// Returns the char representation of the piece to display to the user
@@ -53,7 +51,10 @@ namespace Chess
 		// Switches the private boolean hasNotMoved to false once the piece makes it's first move
 		void firstMoveOccured();
 
-		bool oppositePlayer(int other);
+		// Returns a Boolean True if the argument player is the opposite player of the current player's turn
+		bool oppositePlayer(int player);
+
+		bool canAttackEnemy(int enemyRow, int enemyCol, Board * ChessBoard);
 
 		// Destructor for the GameObject
 		~GameObject();

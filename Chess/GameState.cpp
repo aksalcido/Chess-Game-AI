@@ -12,6 +12,7 @@ void Chess::GameState::progress(int row, int col, int endRow, int endCol)
 	ChessBoard.castlingCheck(endRow, endCol);
 	ChessBoard.firstMoveCheck(endRow, endCol);
 	ChessBoard.updateCoordinates(endRow, endCol);
+	//ChessBoard.playerStatus();
 
 	nextTurn();
 }
@@ -82,7 +83,7 @@ void Chess::GameState::display() const
 		std::cout << "It is " << (turn == white ? "white's " : "black's ") << "turn to move!" << std::endl;
 }
 
-void Chess::GameState::displayMove(int startRow, int startColumn, int endRow, int endColumn)
+void Chess::GameState::displayMove(int startRow, int startColumn, int endRow, int endColumn) const
 {
 	std::cout << "Move: (" << startRow << ", " << startColumn << ") -> (" << endRow << ", " << endColumn << ")" << std::endl;
 }

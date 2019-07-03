@@ -44,7 +44,6 @@ bool Chess::GameObject::validMove(int row, int column, Board * ChessBoard)
 	return false;
 }
 
-
 std::pair<int, int> Chess::GameObject::getCoordinates()
 {
 	return std::make_pair(x, y);
@@ -77,11 +76,23 @@ void Chess::GameObject::firstMoveOccured()
 		hasNotMoved = false;
 }
 
-bool Chess::GameObject::oppositePlayer(int other)
+bool Chess::GameObject::oppositePlayer(int player)
 {
-	return color != other;
+	return color != player;
 }
 
+bool Chess::GameObject::canAttackEnemy(int enemyRow, int enemyCol, Board * ChessBoard)
+{
+	moves = acquireMoves(ChessBoard);
+
+	for (std::vector< std::pair<int, int> >::iterator it = moves.begin(); it != moves.end(); ++it)
+	{
+		if (it->first == enemyRow && it->second == enemyCol)
+			return true;
+	}
+
+	return false;
+}
 
 Chess::GameObject::~GameObject()
 {

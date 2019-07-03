@@ -25,7 +25,7 @@ namespace Chess {
 		void display() const;
 
 		// Displays the Move made by the User
-		void displayMove(int startRow, int startColumn, int endRow, int endColumn);
+		void displayMove(int startRow, int startColumn, int endRow, int endColumn) const;
 
 		// Returns a Boolean in regards to if the game is over or not; True if game is still continuing, false otherwise.
 		bool continuing() const;

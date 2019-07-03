@@ -1,7 +1,7 @@
 #include "King.h"
 
 Chess::King::King(int newX, int newY, int newColor, char rep)
-	: inCheck(false), GameObject(newX, newY, newColor, rep)
+	: checked(false), GameObject(newX, newY, newColor, rep)
 {
 	directions = std::vector<Direction>
 	{
@@ -10,6 +10,11 @@ Chess::King::King(int newX, int newY, int newColor, char rep)
 	};
 
 	castlingPosition = std::pair<int, int>{ x, y + 2 };
+}
+
+bool Chess::King::inCheck()
+{
+	return checked;
 }
 
 std::vector< std::pair<int, int> > Chess::King::acquireMoves(Board * ChessBoard)
@@ -52,6 +57,46 @@ void Chess::King::castling(std::vector< std::pair<int, int> > & moves, Board * C
 	}
 }
 
+void Chess::King::checkForEnemies(Board * ChessBoard)
+{
+	int dx, dy;
+
+	for (int d = 0; d < directions.size(); d++)
+	{
+		dx = directions[d].dx;
+		dy = directions[d].dy;
+
+		for (int i = 0; i < dimension; i++) {
+			
+			if (ChessBoard->inBounds(x + dx, y + dy))
+			{
+				// Continue the Search if the square is just an empty space
+				if (ChessBoard->emptySpace(x + dx, y + dy)) {
+					// increments dx and dy by whichever direction it is going
+					dx = (dx > 0 ? dx + 1 : dx - 1);
+					dy = (dy > 0 ? dy + 1 : dy - 1);
+				}
+				
+				// Meaning there is a GameObject in the way -- Check if Enemy or Ally
+				else {
+
+					// If Enemy GameObject and can attack the King, then checked becomes True
+					if (ChessBoard->enemySpace(x, y, x + dx, y + dy) && ChessBoard->enemyCheckingKing(x + dx, y + dy, x, y))
+					{
+						checked = true;
+					}
+
+					break; // Break because a GameObject being in the King's Path will block other pieces from attacking the King
+				}
+
+			}
+
+			else {
+				break;
+			}
+		}
+	}
+}
 
 
 Chess::King::~King()

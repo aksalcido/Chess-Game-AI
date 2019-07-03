@@ -32,26 +32,32 @@ namespace Chess {
 		// Checks if castling has occured on the board
 		void castlingCheck(int row, int col);
 
+		void playerStatus();
+
 		bool pieceHasNotMoved(int row, int col);
 
 		// Returns a boolean True if the move from start -> end is a valid move that can be made. False otherwise
 		bool validMove(int row, int col, int endRow, int endCol);
 
 		// Returns the char representation of the piece at coordinate x and y on the board
-		char piece(int x, int y) const;
+		char piece(int row, int col) const;
 
 		// Returns the int representation of the color of the piece at coordinate x and y on the board
-		int pieceColor(int x, int y) const;
+		int pieceColor(int row, int col) const;
 
 		// Returns a boolean True if the coordinates dx, dy are an empty space on the board. False otherwise
 		bool emptySpace(int dx, int dy) const;
 
 		bool enemySpace(int row, int col, int dx, int dy) const;
 
+		bool enemyCheckingKing(int enemyRow, int enemyCol, int kingRow, int kingCol);
+
 		// Returnsa boolean True if the row and column argument remain in bounds on the board. False otherwise
-		bool inBounds(int row, int column) const;
+		bool inBounds(int row, int col) const;
 
 		std::vector< std::pair<int, int> > allMoves(int color);
+
+		void updatePieces(GameObject * pieceBeingRemoved);
 
 		// Destructor for the Board Object, releases left over pieces that remain on the board after game is over
 		~Board();
@@ -63,6 +69,11 @@ namespace Chess {
 		// to become fully accessible game objects that allow the game to progress, rather than simply using char types.
 		void initialize(GameObject(*board[dimension][dimension]));
 
+		// 2 Vectors needed to hold all of the GameObject pieces for each player
+		std::vector<GameObject*> whitePieces, blackPieces;
+
+		// 2 GameObjects needed to keep track of the King for each player
+		GameObject * whiteKing, * blackKing;
 	};
 };
 

@@ -12,16 +12,20 @@ namespace Chess {
 
 		bool recentlyCastled();
 
+		bool inCheck();
+
 		std::vector< std::pair<int, int> > acquireMoves(Board * ChessBoard) override;
 
 		void limitedMobility(std::vector< std::pair<int, int> > & moves, Board * ChessBoard);
 
 		void castling(std::vector< std::pair<int, int> > & moves, Board * ChessBoard);
 
+		void checkForEnemies(Board * ChessBoard);
+
 		~King();
 
 	private:
-		bool inCheck;
+		bool checked;
 		std::pair<int, int> castlingPosition;
 
 	};

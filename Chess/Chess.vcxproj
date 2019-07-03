@@ -131,6 +131,7 @@
     <ClInclude Include="Board.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Direction.h" />
     <ClInclude Include="King.h" />
     <ClInclude Include="Knight.h" />
     <ClInclude Include="Pawn.h" />

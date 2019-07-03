@@ -1,12 +1,2 @@
-﻿  main.cpp
-  Rook.cpp
-  Queen.cpp
-  Pawn.cpp
-  Knight.cpp
-  King.cpp
-  GameState.cpp
-  GameObject.cpp
-  Board.cpp
-  Bishop.cpp
-  Generating Code...
+﻿  Board.cpp
   Chess.vcxproj -> C:\Users\Armando\Desktop\Coding Files\VisualStudio Projects\C++\Projects\Chess\Chess-Game-AI\x64\Debug\Chess.exe
