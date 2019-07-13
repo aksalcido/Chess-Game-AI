@@ -13,8 +13,17 @@ Chess::Queen::Queen(int newX, int newY, int newColor, char rep)
 
 std::vector< std::pair<int, int> > Chess::Queen::acquireMoves(Board * ChessBoard)
 {
+	// Clears moves that might have been acquired in previous turns
 	moves.clear();
+
+	// Acquires moves that are possible given the current Chessboard accordingly to the Queen's movement pattern
 	mobility(ChessBoard);
+
+	// Will go through the 'moves' vector and dispose of the invalid moves due to the King being in Check
+	if (playerInCheck(ChessBoard))
+	{
+		moves = adjustMoves(ChessBoard);
+	}
 
 	return moves;
 }
@@ -48,9 +57,8 @@ void Chess::Queen::mobility(Board * ChessBoard)
 			}
 
 			// increments dx and dy by whichever direction it is going
-			dx = (dx == 0 ? 0 : (dx >= 1 ? dx + 1 : dx - 1));
-			dy = (dy == 0 ? 0 : (dy >= 1 ? dy + 1 : dy - 1));
-
+			incrementDirection(dx);
+			incrementDirection(dy);
 		}
 	}
 

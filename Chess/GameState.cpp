@@ -88,6 +88,18 @@ void Chess::GameState::displayMove(int startRow, int startColumn, int endRow, in
 	std::cout << "Move: (" << startRow << ", " << startColumn << ") -> (" << endRow << ", " << endColumn << ")" << std::endl;
 }
 
+void Chess::GameState::prompt(const char * message)
+{
+	std::cout << message;
+}
+
+void Chess::GameState::input(int & row, int & col, int & endRow, int & endCol)
+{
+	std::cin >> row;
+	std::cin >> col;
+	std::cin >> endRow;
+	std::cin >> endCol;
+}
 
 Chess::GameState::~GameState()
 {

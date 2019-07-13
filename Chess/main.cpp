@@ -13,11 +13,8 @@ int main()
 
 	while ( game.continuing() ) {
 		// Prompts the User and proceeds to take input
-		std::cout << "Input your start & end row/column (ex: 3 1 5 6): ";
-		std::cin >> startRow;
-		std::cin >> startColumn;
-		std::cin >> endRow;
-		std::cin >> endColumn;
+		game.prompt("Input your start & end row/column (ex: 3 1 5 6): ");
+		game.input(startRow, startColumn, endRow, endColumn);
 
 		// Game Checks if the move inputted from the user is valid, if so proceeds to progress the game
 		if (game.validateMove(startRow, startColumn, endRow, endColumn))
@@ -29,7 +26,7 @@ int main()
 		// Otherwise informs the user that the move is invalid
 		else
 		{
-			std::cout << "Invalid Move... Please try again" << std::endl;
+			game.prompt("Invalid Move... Please try again\n");
 		}
 
 		// Invalid Input that causes input stream to fail is handled here

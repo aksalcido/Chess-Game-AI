@@ -20,11 +20,16 @@ namespace Chess {
 		// Returns a vector of pairs of each possible move that can be made on the Board for the King
 		std::vector< std::pair<int, int> > acquireMoves(Board * ChessBoard) override;
 		
+		// Returns the Paths of the Enemies that are placing the King into Check
+		std::vector<std::vector<std::pair<int, int>>> enemies();
+
 		~King();
 
 	private:
 		bool checked;
 		std::pair<int, int> castlingPosition;
+
+		std::vector<std::vector<std::pair<int, int>>> paths;
 
 		// Handles lateral movement that the King can make on the Board. Adds each possible move as a pair of (row, column) to the 'moves' vector.
 		void limitedMobility(Board * ChessBoard);

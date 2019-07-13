@@ -12,8 +12,17 @@ Chess::Knight::Knight(int newX, int newY, int newColor, char rep)
 
 std::vector< std::pair<int, int> > Chess::Knight::acquireMoves(Board * ChessBoard)
 {
+	// Clears moves that might have been acquired in previous turns
 	moves.clear();
+
+	// Acquires moves that are possible given the current Chessboard accordingly to the Knight's movement pattern
 	jump(ChessBoard);
+
+	// Will go through the 'moves' vector and dispose of the invalid moves due to the King being in Check
+	if (playerInCheck(ChessBoard))
+	{
+		moves = adjustMoves(ChessBoard);
+	}
 
 	return moves;
 }

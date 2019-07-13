@@ -19,14 +19,28 @@ bool Chess::King::inCheck()
 
 std::vector< std::pair<int, int> > Chess::King::acquireMoves(Board * ChessBoard)
 {
+	// Clears moves that might have been acquired in previous turns
 	moves.clear();
 
+	// Acquires moves that are possible given the current Chessboard accordingly to the King's movement pattern
 	limitedMobility(ChessBoard);
-	
-	if (hasNotMoved)
+
+	if (hasNotMoved) 
 		castling(ChessBoard);
 
+	// Will go through the 'moves' vector and dispose of the invalid moves due to the King being in Check
+	if (playerInCheck(ChessBoard))
+	{
+
+	}
+
+
 	return moves;
+}
+
+std::vector < std::vector<std::pair<int, int>>> Chess::King::enemies()
+{
+	return paths;
 }
 
 void Chess::King::limitedMobility(Board * ChessBoard)
@@ -47,8 +61,10 @@ void Chess::King::limitedMobility(Board * ChessBoard)
 
 void Chess::King::castling(Board * ChessBoard)
 {
-	// Rook Coordinate
+	// Rook x-Coordinate for Castling which differs depending on which Player is trying to castle
 	int rx = (color == white ? dimension - 1 : 0);
+
+	// Rook y-Coordinate for Castling which will always be at the end of the board
 	int ry = dimension - 1;
 	
 	if (ChessBoard->emptySpace(castlingPosition.first, castlingPosition.second - 1) && ChessBoard->emptySpace(castlingPosition.first, castlingPosition.second) &&
@@ -62,45 +78,50 @@ void Chess::King::checkedStatus(Board * ChessBoard)
 {
 	// Local Boolean to check if a check occured during the last turn, that way 'checked' can be changed between true or false for each turn
 	bool currentlyChecked = false;
+
 	checkForEnemies(ChessBoard, currentlyChecked);
 	checkForKnights(ChessBoard, currentlyChecked);
+
+	// Updates the value of 'checked' for the King
 	checked = currentlyChecked;
 }
 
 void Chess::King::checkForEnemies(Board * ChessBoard, bool & currentlyChecked)
 {
 	int dx, dy;
+	std::vector<std::pair<int, int>> path;
 
 	for (int d = 0; d < directions.size(); d++)
 	{
 		dx = directions[d].dx;
 		dy = directions[d].dy;
+		path.clear();
 
-		for (int i = 0; i < dimension; i++) {
-			
-			if (ChessBoard->inBounds(x + dx, y + dy))
-			{
-				// Continue the Search if the square is just an empty space
-				if (ChessBoard->emptySpace(x + dx, y + dy)) {
-					// increments dx and dy by whichever direction it is going
-					dx = (dx > 0 ? dx + 1 : dx - 1);
-					dy = (dy > 0 ? dy + 1 : dy - 1);
-				}
-				
-				// Meaning there is a GameObject in the way -- Check if Enemy or Ally
-				else {
-					// If Enemy GameObject and can attack the King, then checked becomes True
-					if (ChessBoard->enemySpace(x, y, x + dx, y + dy) && ChessBoard->enemyCheckingKing(x + dx, y + dy, x, y))
-					{
-						currentlyChecked = true;
-					}
 
-					break; // Break because a GameObject being in the King's Path will block other pieces from attacking the King
-				}
+		while ((ChessBoard->inBounds(x + dx, y + dy))) {
 
+			// Pushback the path that will get to the King -- there is also chances it won't in that case it will be discarded
+			path.push_back(std::make_pair(x + dx, y + dy));
+
+			// Continue the Search if the square is just an empty space
+			if (ChessBoard->emptySpace(x + dx, y + dy)) {
+				// increments dx and dy by whichever direction it is going
+				incrementDirection(dx);
+				incrementDirection(dy);
 			}
-			
-			break; // Break because if the coordinates (dx, dy) are out of bounds then being checked from that Direction is impossible
+				
+			// Meaning there is a GameObject in the way -- Check if Enemy or Ally
+			else {
+				// If Enemy GameObject and can attack the King, then checked becomes True
+				if (ChessBoard->enemySpace(x, y, x + dx, y + dy) && ChessBoard->enemyCheckingKing(x + dx, y + dy, x, y))
+				{
+					currentlyChecked = true;
+					paths.push_back(path);
+				}
+
+				break; // Break because a GameObject being in the King's Path will block other pieces from attacking the King
+			}
+
 		}
 	}
 }

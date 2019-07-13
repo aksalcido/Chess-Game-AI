@@ -73,7 +73,13 @@ bool Chess::Board::emptySpace(int row, int col) const
 
 bool Chess::Board::enemySpace(int row, int col, int dx, int dy) const
 {
-	return (inBounds(dx, dy) ? (!emptySpace(dx, dy) && board[row][col]->oppositePlayer(pieceColor(dx, dy))) : false);
+	if (inBounds(dx, dy))
+	{
+		return !emptySpace(dx, dy) && board[row][col]->oppositePlayer(pieceColor(dx, dy));
+	}
+
+	return false;
+	//return (inBounds(dx, dy) ? (!emptySpace(dx, dy) && board[row][col]->oppositePlayer(pieceColor(dx, dy))) : false);
 }
 
 bool Chess::Board::enemyCheckingKing(int enemyRow, int enemyCol, int kingRow, int kingCol)
@@ -85,6 +91,16 @@ bool Chess::Board::inBounds(int row, int col) const
 {
 	return (0 <= row && row < dimension) && (0 <= col && col < dimension);
 }
+
+
+bool Chess::Board::kingInCheck(int color) const
+{
+	if (color == white)
+		return ((King*)whiteKing)->inCheck();
+	else
+		return ((King*)blackKing)->inCheck();
+}
+
 
 char Chess::Board::piece(int row, int col) const
 {
@@ -113,6 +129,16 @@ void Chess::Board::updatePieces(GameObject * pieceBeingRemoved)
 		std::cout << "BlackPieces.size(): " << blackPieces.size() << std::endl;
 	}
 }
+
+std::vector<std::vector<std::pair<int, int>>> Chess::Board::enemyPaths(int color)
+{
+	if (color == white)
+		return ((King*)whiteKing)->enemies();
+	else
+		return ((King*)blackKing)->enemies();
+}
+
+
 
 void Chess::Board::initialize(GameObject(*board[dimension][dimension]))
 {

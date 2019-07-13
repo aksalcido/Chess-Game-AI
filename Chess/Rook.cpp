@@ -9,10 +9,21 @@ Chess::Rook::Rook(int newX, int newY, int newColor, char rep)
 	};
 }
 
+#include <iostream>
+
 std::vector< std::pair<int, int> > Chess::Rook::acquireMoves(Board * ChessBoard)
 {
+	// Clears moves that might have been acquired in previous turns
 	moves.clear();
+
+	// Acquires moves that are possible given the current Chessboard accordingly to the Rook's movement pattern
 	lateral(ChessBoard);
+
+	// Will go through the 'moves' vector and dispose of the invalid moves due to the King being in Check
+	if (playerInCheck(ChessBoard))
+	{
+		moves = adjustMoves(ChessBoard);
+	}
 
 	return moves;
 }
@@ -44,8 +55,8 @@ void Chess::Rook::lateral(Board * ChessBoard)
 			}
 
 			// increments dx and dy by whichever direction it is going
-			dx = (dx == 0 ? 0 : (dx >= 1 ? dx + 1 : dx - 1));
-			dy = (dy == 0 ? 0 : (dy >= 1 ? dy + 1 : dy - 1));
+			incrementDirection(dx);
+			incrementDirection(dy);
 		}
 	}
 }

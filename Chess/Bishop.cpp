@@ -11,8 +11,17 @@ Chess::Bishop::Bishop(int newX, int newY, int newColor, char rep)
 
 std::vector< std::pair<int, int> > Chess::Bishop::acquireMoves(Board * ChessBoard)
 {
+	// Clears moves that might have been acquired in previous turns
 	moves.clear();
+
+	// Acquires moves that are possible given the current Chessboard accordingly to the Bishop's movement pattern
 	diagonal(ChessBoard);
+
+	// Will go through the 'moves' vector and dispose of the invalid moves due to the King being in Check
+	if (playerInCheck(ChessBoard))
+	{
+		moves = adjustMoves(ChessBoard);
+	}
 
 	return moves;
 }
@@ -44,9 +53,8 @@ void Chess::Bishop::diagonal(Board * ChessBoard)
 			}
 
 			// increments dx and dy by whichever direction it is going
-			dx = (dx > 0 ? dx + 1 : dx - 1);
-			dy = (dy > 0 ? dy + 1 : dy - 1);
-
+			incrementDirection(dx);
+			incrementDirection(dy);
 		}
 	}
 }
