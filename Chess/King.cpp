@@ -1,4 +1,5 @@
 #include "King.h"
+#include <iostream>
 
 Chess::King::King(int newX, int newY, int newColor, char rep)
 	: checked(false), GameObject(newX, newY, newColor, rep)
@@ -12,12 +13,33 @@ Chess::King::King(int newX, int newY, int newColor, char rep)
 	castlingPosition = std::pair<int, int>{ x, y + 2 };
 }
 
+Chess::King::King(const King & k) : checked(k.checked), castlingPosition(k.castlingPosition), paths(k.paths)
+{
+	
+}
+
+Chess::King& Chess::King::operator=(const Chess::King & piece)
+{
+	GameObject::operator=(piece);
+	checked = piece.checked;
+	castlingPosition = piece.castlingPosition;
+	paths = piece.paths;
+
+	return *this;
+}
+
+void Chess::King::copy(const GameObject * piece)
+{
+	*this = *(King*)(piece);
+}
+
+
 bool Chess::King::inCheck()
 {
 	return checked;
 }
 
-std::vector< std::pair<int, int> > Chess::King::acquireMoves(Board * ChessBoard)
+Moves Chess::King::acquireMoves(Board * ChessBoard)
 {
 	// Clears moves that might have been acquired in previous turns
 	moves.clear();
@@ -31,14 +53,14 @@ std::vector< std::pair<int, int> > Chess::King::acquireMoves(Board * ChessBoard)
 	// Will go through the 'moves' vector and dispose of the invalid moves due to the King being in Check
 	if (playerInCheck(ChessBoard))
 	{
-
+		moves = adjustMoves(ChessBoard);
 	}
 
 
 	return moves;
 }
 
-std::vector < std::vector<std::pair<int, int>>> Chess::King::enemies()
+std::vector <Moves> Chess::King::enemies()
 {
 	return paths;
 }
@@ -89,7 +111,7 @@ void Chess::King::checkedStatus(Board * ChessBoard)
 void Chess::King::checkForEnemies(Board * ChessBoard, bool & currentlyChecked)
 {
 	int dx, dy;
-	std::vector<std::pair<int, int>> path;
+	Moves path;
 
 	for (int d = 0; d < directions.size(); d++)
 	{
@@ -142,8 +164,10 @@ void Chess::King::checkForKnights(Board * ChessBoard, bool & currentlyChecked)
 		dy = possibleKnights[d].dy;
 
 		// If Enemy Knight is in the coordinates of the directions then the King is placed into check
-		if (ChessBoard->enemySpace(x, y, x + dx, y + dy) && ChessBoard->piece(x + dx, y + dy) == 'H' | 'h')
+		if (ChessBoard->enemySpace(x, y, x + dx, y + dy) && (ChessBoard->piece(x + dx, y + dy) == 'H' || ChessBoard->piece(x + dx, y + dy) == 'h')) {
 			currentlyChecked = true;
+			paths.push_back(Moves{ std::make_pair(x + dx, y + dy) });
+		}
 	}
 
 }

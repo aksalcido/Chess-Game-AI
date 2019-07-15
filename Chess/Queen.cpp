@@ -11,7 +11,19 @@ Chess::Queen::Queen(int newX, int newY, int newColor, char rep)
 
 }
 
-std::vector< std::pair<int, int> > Chess::Queen::acquireMoves(Board * ChessBoard)
+Chess::Queen& Chess::Queen::operator=(const Chess::Queen & piece)
+{
+	GameObject::operator=(piece);
+
+	return *this;
+}
+
+void Chess::Queen::copy(const GameObject * piece)
+{
+	*this = *(Queen*)(piece);
+}
+
+Moves Chess::Queen::acquireMoves(Board * ChessBoard)
 {
 	// Clears moves that might have been acquired in previous turns
 	moves.clear();
@@ -63,6 +75,7 @@ void Chess::Queen::mobility(Board * ChessBoard)
 	}
 
 }
+
 
 Chess::Queen::~Queen()
 {

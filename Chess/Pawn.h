@@ -11,8 +11,14 @@ namespace Chess {
 		// Pawn Constructor that assigns the coordinate values with respective color and char representation for the GameObject
 		Pawn(int newX, int newY, int newColor, char rep);
 
+		Pawn & operator=(const Pawn & piece);
+
+		// Copies a Pawn GameObject by proper pointer conversion on a GameObject and calling Pawn's = operator
+		void copy(const GameObject * piece) override;
+
 		// Returns a vector of pairs of each possible move that can be made on the Board for the Pawn
-		std::vector< std::pair<int, int> > acquireMoves(Board * ChessBoard) override;
+		Moves acquireMoves(Board * ChessBoard) override;
+
 
 		~Pawn();
 

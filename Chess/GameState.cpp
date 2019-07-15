@@ -12,7 +12,7 @@ void Chess::GameState::progress(int row, int col, int endRow, int endCol)
 	ChessBoard.castlingCheck(endRow, endCol);
 	ChessBoard.firstMoveCheck(endRow, endCol);
 	ChessBoard.updateCoordinates(endRow, endCol);
-	ChessBoard.playerStatus(turn);
+	ChessBoard.playerStatus();
 
 	nextTurn();
 }

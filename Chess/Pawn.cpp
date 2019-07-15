@@ -6,7 +6,21 @@ Chess::Pawn::Pawn(int newX, int newY, int newColor, char rep)
 
 }
 
-std::vector< std::pair<int, int> > Chess::Pawn::acquireMoves(Board * ChessBoard)
+
+Chess::Pawn& Chess::Pawn::operator=(const Chess::Pawn & piece)
+{
+	GameObject::operator=(piece);
+	enpassant = piece.enpassant;
+
+	return *this;
+}
+
+void Chess::Pawn::copy(const GameObject * piece)
+{
+	*this = *(Pawn*)(piece);
+}
+
+Moves Chess::Pawn::acquireMoves(Board * ChessBoard)
 {
 	// Clears moves that might have been acquired in previous turns
 	moves.clear();
@@ -58,7 +72,6 @@ void Chess::Pawn::diagonal(Board * ChessBoard)
 		moves.push_back(std::make_pair(dx, y + 1));
 	}
 }
-
 
 Chess::Pawn::~Pawn()
 {

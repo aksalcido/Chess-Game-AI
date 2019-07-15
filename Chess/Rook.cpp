@@ -9,9 +9,19 @@ Chess::Rook::Rook(int newX, int newY, int newColor, char rep)
 	};
 }
 
-#include <iostream>
+Chess::Rook& Chess::Rook::operator=(const Chess::Rook & piece)
+{
+	GameObject::operator=(piece);
 
-std::vector< std::pair<int, int> > Chess::Rook::acquireMoves(Board * ChessBoard)
+	return *this;
+}
+
+void Chess::Rook::copy(const GameObject * piece)
+{
+	*this = *(Rook*)(piece);
+}
+
+Moves Chess::Rook::acquireMoves(Board * ChessBoard)
 {
 	// Clears moves that might have been acquired in previous turns
 	moves.clear();

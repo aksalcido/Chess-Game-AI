@@ -10,7 +10,19 @@ Chess::Knight::Knight(int newX, int newY, int newColor, char rep)
 	};
 }
 
-std::vector< std::pair<int, int> > Chess::Knight::acquireMoves(Board * ChessBoard)
+Chess::Knight& Chess::Knight::operator=(const Chess::Knight & piece)
+{
+	GameObject::operator=(piece);
+
+	return *this;
+}
+
+void Chess::Knight::copy(const GameObject * piece)
+{
+	*this = *(Knight*)(piece);
+}
+
+Moves Chess::Knight::acquireMoves(Board * ChessBoard)
 {
 	// Clears moves that might have been acquired in previous turns
 	moves.clear();
@@ -43,6 +55,7 @@ void Chess::Knight::jump(Board * ChessBoard)
 
 	}
 }
+
 
 Chess::Knight::~Knight()
 {

@@ -9,7 +9,19 @@ Chess::Bishop::Bishop(int newX, int newY, int newColor, char rep)
 	};
 }
 
-std::vector< std::pair<int, int> > Chess::Bishop::acquireMoves(Board * ChessBoard)
+Chess::Bishop& Chess::Bishop::operator=(const Chess::Bishop & piece)
+{
+	GameObject::operator=(piece);
+
+	return *this;
+}
+
+void Chess::Bishop::copy(const GameObject * piece)
+{
+	*this = *(Bishop*)(piece);
+}
+
+Moves Chess::Bishop::acquireMoves(Board * ChessBoard)
 {
 	// Clears moves that might have been acquired in previous turns
 	moves.clear();
@@ -58,6 +70,7 @@ void Chess::Bishop::diagonal(Board * ChessBoard)
 		}
 	}
 }
+
 
 Chess::Bishop::~Bishop()
 {

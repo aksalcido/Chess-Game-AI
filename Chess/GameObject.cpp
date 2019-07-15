@@ -30,6 +30,7 @@ Chess::GameObject& Chess::GameObject::operator=(const Chess::GameObject & piece)
 	return *this;
 }
 
+
 std::pair<int, int> Chess::GameObject::getCoordinates()
 {
 	return std::make_pair(x, y);
@@ -39,7 +40,7 @@ bool Chess::GameObject::validMove(int row, int column, Board * ChessBoard)
 {
 	moves = acquireMoves(ChessBoard);
 
-	for (std::vector< std::pair<int, int> >::iterator it = moves.begin(); it != moves.end(); ++it)
+	for (Moves::iterator it = moves.begin(); it != moves.end(); ++it)
 	{
 		if (it->first == row && it->second == column)
 			return true;
@@ -75,12 +76,11 @@ void Chess::GameObject::firstMoveOccured()
 		hasNotMoved = false;
 }
 
-
-std::vector<std::pair<int, int>> Chess::GameObject::adjustMoves(Board * ChessBoard)
+Moves Chess::GameObject::adjustMoves(Board * ChessBoard)
 {
-	std::vector<std::vector<std::pair<int, int>>> enemyPaths = ChessBoard->enemyPaths(color);
+	std::vector<Moves> enemyPaths = ChessBoard->enemyPaths(color);
 	
-	std::vector<std::pair<int, int>> path, newMoves;
+	Moves path, newMoves;
 
 
 	//std::cout << "moves.size(): " << moves.size() << std::endl;
@@ -89,29 +89,46 @@ std::vector<std::pair<int, int>> Chess::GameObject::adjustMoves(Board * ChessBoa
 
 
 	// King wants to avoid the Enemies or take them -- also, if there are multiple enemies checking the King, then to avoid a check it is only possible by moving the King
-	if (displayPiece() == 'K' || displayPiece() == 'k' || enemyPaths.size() > 1)
+	if (displayPiece() == BLACK_KING || displayPiece() == WHITE_KING )
 	{
-		// ??
+		adjustForKing(newMoves, ChessBoard);
 	}
 
-	// Other GameObjects want to block the Enemies or take them
-	else {
+	// Other GameObjects have to adjust their moves if their King is in check, but if there is multiple GameObjects checking the King then it is impossible for them to have any moves
+	else if (enemyPaths.size() == 1) {
 		path = enemyPaths.front();
-
-		for (std::vector<std::pair<int, int>>::iterator enemy_it = path.begin(); enemy_it != path.end(); enemy_it++)
-		{
-			for (std::vector<std::pair<int, int>>::iterator piece_it = moves.begin(); piece_it != moves.end(); piece_it++)
-			{
-				if (piece_it->first == enemy_it->first && piece_it->second == enemy_it->second)
-					newMoves.push_back(std::make_pair(piece_it->first, piece_it->second));
-			}
-		}
+		adjustForPieces(path, newMoves);
 	}
 	
-
 	std::cout << "newMoves.size(): " << newMoves.size() << std::endl;
 
 	return newMoves;
+}
+
+
+void Chess::GameObject::adjustForKing(Moves & newMoves, Board * ChessBoard)
+{
+	for (Moves::iterator it = moves.begin(); it != moves.end(); it++)
+	{
+		if (ChessBoard->safeMove(x, y, it->first, it->second))
+		{
+			std::cout << "safe move: " << "(" << (it->first) << ", " << (it->second) << ")" << std::endl;
+			newMoves.push_back(std::make_pair(it->first, it->second));
+		}
+	}
+}
+
+
+void Chess::GameObject::adjustForPieces(Moves path, Moves & newMoves)
+{
+	for (Moves::iterator enemy_it = path.begin(); enemy_it != path.end(); enemy_it++)
+	{
+		for (Moves::iterator piece_it = moves.begin(); piece_it != moves.end(); piece_it++)
+		{
+			if (piece_it->first == enemy_it->first && piece_it->second == enemy_it->second)
+				newMoves.push_back(std::make_pair(piece_it->first, piece_it->second));
+		}
+	}
 }
 
 
@@ -124,7 +141,7 @@ bool Chess::GameObject::canAttackEnemy(int enemyRow, int enemyCol, Board * Chess
 {
 	moves = acquireMoves(ChessBoard);
 
-	for (std::vector< std::pair<int, int> >::iterator it = moves.begin(); it != moves.end(); ++it)
+	for (Moves::iterator it = moves.begin(); it != moves.end(); ++it)
 	{
 		if (it->first == enemyRow && it->second == enemyCol)
 			return true;

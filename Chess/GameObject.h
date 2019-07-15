@@ -3,9 +3,27 @@
 #pragma once
 #include <vector>
 #include "Direction.h"
+
 #define white 0
 #define black 1
 #define dimension 8
+
+#define WHITE_KING 'k'
+#define WHITE_QUEEN 'q'
+#define WHITE_BISHOP 'b'
+#define WHITE_KNIGHT 'h'
+#define WHITE_ROOK 'r'
+#define WHITE_PAWN 'p'
+
+#define BLACK_KING 'K'
+#define BLACK_QUEEN 'Q'
+#define BLACK_BISHOP 'B'
+#define BLACK_KNIGHT 'H'
+#define BLACK_ROOK 'R'
+#define BLACK_PAWN 'P'
+
+
+typedef std::vector<std::pair<int, int>> Moves;
 
 namespace Chess 
 {
@@ -28,11 +46,14 @@ namespace Chess
 		// Overloaded = operator for cases where GameObject is copied 
 		GameObject & operator=(const GameObject & piece);
 		
+		// Virtual function used on any of the piece GameObjects so that they are capable of copying their own attributes when cloning
+		virtual void copy(const GameObject * piece) = 0;
+
 		// Virtual function used on any of the piece GameObjects on the board since they all have different movement patterns
-		virtual std::vector< std::pair<int, int> > acquireMoves(Board * ChessBoard) = 0;
+		virtual Moves acquireMoves(Board * ChessBoard) = 0;
 
 		// Adjusts the moves to be applicable for the King being in Check
-		std::vector<std::pair<int, int>> adjustMoves(Board * ChessBoard);
+		Moves adjustMoves(Board * ChessBoard);
 
 		// Returns a pair of the coordinates of the GameObject
 		std::pair<int, int> getCoordinates();
@@ -75,7 +96,12 @@ namespace Chess
 		char representation;
 		bool hasNotMoved;
 		std::vector<Direction> directions;
-		std::vector<std::pair<int, int>> moves;
+		Moves moves;
+
+		void adjustForKing(Moves & newMoves, Board * ChessBoard);
+
+		void adjustForPieces(Moves path, Moves & newMoves);
+
 
 	};
 };
