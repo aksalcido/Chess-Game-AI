@@ -82,12 +82,6 @@ Moves Chess::GameObject::adjustMoves(Board * ChessBoard)
 	
 	Moves path, newMoves;
 
-
-	//std::cout << "moves.size(): " << moves.size() << std::endl;
-	//std::cout << "enemyPaths.size(): " << enemyPaths.size() << std::endl;
-	//std::cout << "path.size(): " << path.size() << std::endl;
-
-
 	// King wants to avoid the Enemies or take them -- also, if there are multiple enemies checking the King, then to avoid a check it is only possible by moving the King
 	if (displayPiece() == BLACK_KING || displayPiece() == WHITE_KING )
 	{
@@ -100,7 +94,7 @@ Moves Chess::GameObject::adjustMoves(Board * ChessBoard)
 		adjustForPieces(path, newMoves);
 	}
 	
-	std::cout << "newMoves.size(): " << newMoves.size() << std::endl;
+	//std::cout << "newMoves.size(): " << newMoves.size() << std::endl;
 
 	return newMoves;
 }

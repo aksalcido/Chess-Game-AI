@@ -56,7 +56,6 @@ Moves Chess::King::acquireMoves(Board * ChessBoard)
 		moves = adjustMoves(ChessBoard);
 	}
 
-
 	return moves;
 }
 

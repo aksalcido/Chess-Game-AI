@@ -37,6 +37,8 @@ namespace Chess {
 		// possible, proceeds to swap the Rook and King in respects to the Chess Castling Rule
 		void castlingCheck(int row, int col);
 
+		void gameFinishedCheck(int turn);
+
 		// Checks if either Kings for both players is in Check after a turn has been made
 		void playerStatus();
 

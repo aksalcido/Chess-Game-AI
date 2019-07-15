@@ -61,6 +61,29 @@ void Chess::Board::castlingCheck(int row, int col)
 	}
 }
 
+void Chess::Board::gameFinishedCheck(int turn)
+{
+	std::vector<GameObject*> pieces = (turn == black ? blackPieces : whitePieces);
+	Moves moves;
+
+	bool outOfMoves = true;
+
+	for (std::vector<GameObject*>::iterator it = pieces.begin(); it != pieces.end(); it++)
+	{
+		moves = (*it)->acquireMoves(this);
+
+		// If the Player has moves available, the game is not over so we can break out of this check
+		if (moves.size() != 0) {
+			outOfMoves = false;
+			break;
+		}
+	}
+
+	if (outOfMoves) {
+		throw GameOverException();
+	}
+}
+
 bool Chess::Board::pieceHasNotMoved(int row, int col)
 {
 	return board[row][col]->initialPosition();

@@ -15,6 +15,14 @@ void Chess::GameState::progress(int row, int col, int endRow, int endCol)
 	ChessBoard.playerStatus();
 
 	nextTurn();
+
+	try {
+		if (ChessBoard.kingInCheck(turn))
+			ChessBoard.gameFinishedCheck(turn);
+	}
+	catch (GameOverException e) {
+		GameOver = true;
+	}
 }
 
 void Chess::GameState::movement(int row, int col, int endRow, int endCol)

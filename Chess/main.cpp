@@ -34,6 +34,7 @@ int main()
 		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	}
 
+	std::cout << "Game is complete" << std::endl;
 
 	return 0;
 }

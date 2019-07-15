@@ -3,6 +3,7 @@
 #pragma once
 #include <vector>
 #include "Direction.h"
+#include "GameOverException.h"
 
 #define white 0
 #define black 1
