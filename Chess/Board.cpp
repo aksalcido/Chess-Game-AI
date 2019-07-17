@@ -61,6 +61,7 @@ void Chess::Board::castlingCheck(int row, int col)
 	}
 }
 
+
 void Chess::Board::gameFinishedCheck(int turn)
 {
 	std::vector<GameObject*> pieces = (turn == black ? blackPieces : whitePieces);
@@ -68,12 +69,22 @@ void Chess::Board::gameFinishedCheck(int turn)
 
 	bool outOfMoves = true;
 
+	// Best Case and average case will iterate through the first one and immediately break
+	// Worst Case will iterate through all of the Pieces and the last one will have moves in the case that it is not game over
 	for (std::vector<GameObject*>::iterator it = pieces.begin(); it != pieces.end(); it++)
 	{
 		moves = (*it)->acquireMoves(this);
 
 		// If the Player has moves available, the game is not over so we can break out of this check
 		if (moves.size() != 0) {
+
+			// DELETE THIS UNDER
+			std::cout << (*it)->displayPiece();
+
+			for (int i = 0; i < moves.size(); i++) {
+				std::cout << "(" << moves[i].first << ", " << moves[i].second << ")" << std::endl;
+			}
+
 			outOfMoves = false;
 			break;
 		}
@@ -82,6 +93,55 @@ void Chess::Board::gameFinishedCheck(int turn)
 	if (outOfMoves) {
 		throw GameOverException();
 	}
+}
+
+void Chess::Board::promote(int row, int col, int promoted)
+{
+	int color = board[row][col]->pieceColor();
+	char rep;
+
+	// Handles removing the Pawn from our GameObjects vector and deallocating the memory
+	updatePieces(board[row][col]);
+	delete board[row][col];
+	
+	// Handles the different cases of what Piece the user wants
+	switch (promoted)
+	{
+		case QUEEN_PROMOTION:
+			rep = (color == white ? WHITE_QUEEN : BLACK_QUEEN);
+			board[row][col] = new Queen(row, col, color, rep);
+			break;
+
+
+		case ROOK_PROMOTION:
+			rep = (color == white ? WHITE_ROOK : BLACK_ROOK);
+			board[row][col] = new Rook(row, col, color, rep);
+			break;
+
+		case BISHOP_PROMOTION:
+			rep = (color == white ? WHITE_BISHOP : BLACK_BISHOP);
+			board[row][col] = new Bishop(row, col, color, rep);
+			break;
+
+		case KNIGHT_PROMOTION:
+			rep = (color == white ? WHITE_KNIGHT : BLACK_KNIGHT);
+			board[row][col] = new Knight(row, col, color, rep);
+			break;
+	}
+
+	// Add the promoted piece to our GameObjects vector
+	if (color == white)
+		whitePieces.push_back(board[row][col]);
+	else
+		blackPieces.push_back(board[row][col]);
+}
+
+bool Chess::Board::promotion(int row, int col)
+{
+	int maxRow = (pieceColor(row, col) == white ? 0 : 7);
+
+	// Promotion Rules: If a Pawn reaches the end row of the board for the respective player, then they are granted a new piece of their choosing
+	return ((piece(row, col) == WHITE_PAWN || piece(row, col) == BLACK_PAWN) && row == maxRow);
 }
 
 bool Chess::Board::pieceHasNotMoved(int row, int col)
@@ -362,8 +422,6 @@ void Chess::Board::initialize(GameObject(*board[dimension][dimension]))
 
 Chess::Board::~Board()
 {
-	std::cout << "Board Destructor Called" << std::endl;
-
 	for (unsigned int i = 0; i < dimension; i++) {
 		for (unsigned int j = 0; j < dimension; j++) {
 			if (board[i][j] != nullptr)

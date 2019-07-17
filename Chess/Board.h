@@ -10,14 +10,20 @@
 #include "Knight.h"
 #include "Pawn.h"
 
+#define QUEEN_PROMOTION 1
+#define ROOK_PROMOTION 2
+#define BISHOP_PROMOTION 3
+#define KNIGHT_PROMOTION 4
 
 namespace Chess {
+
 	class Board
 	{
 	public:
 		// Initializes a Board object that contains the GameObject pieces that are on the board during play
 		Board();
 
+		// Board copy constructor used when cloning a Board object
 		Board(const Board & b);
 
 		// movementToEmptySquare() simply swaps a GameObject with the nullptr held in the endRow, endCol coordinates
@@ -37,10 +43,17 @@ namespace Chess {
 		// possible, proceeds to swap the Rook and King in respects to the Chess Castling Rule
 		void castlingCheck(int row, int col);
 
+		// Checks if the Game is complete at the end of a turn, if so raises a GameOverException that is caught in the GameState
 		void gameFinishedCheck(int turn);
 
 		// Checks if either Kings for both players is in Check after a turn has been made
 		void playerStatus();
+		
+		// Handles the promotion once received the user inputted argument 'promoted' on which piece they want
+		void promote(int row, int col, int promoted);
+
+		// Checks if a pawn has reached the end of the board for the respective player, if so then promotion is forced which requires user input so we pass the GameState pointer
+		bool promotion(int row, int col);
 
 		// Returns a boolean True if a GameObject at coordinates (row, col) has not been moved on the board. False otherwise
 		bool pieceHasNotMoved(int row, int col);
@@ -72,9 +85,6 @@ namespace Chess {
 		// Returns the int representation of the color of the piece at coordinate (row, col) on the board
 		int pieceColor(int row, int col) const;
 
-		// Updates the pieces vectors stored in the Board object by removing the GameObject argument
-		void updatePieces(GameObject * pieceBeingRemoved);
-
 		// Returns a Vector of the Moves for each GameObject that takes a Path to check the King GameObject
 		// The Vector length will represent how many GameObjects are checking the King, so typically it will be of length 1, any higher will
 		// mean that there are multiple GameObjects checking the King and then only the King is capable of movement. If no movement, then Player is in checkmate
@@ -89,6 +99,9 @@ namespace Chess {
 
 	private:
 		GameObject * board[dimension][dimension];
+
+		// Updates the pieces vectors stored in the Board object by removing the GameObject argument
+		void updatePieces(GameObject * pieceBeingRemoved);
 
 		// Initializes the Board to contain GameObject pieces similar to the char representation of the Board, This allows the board
 		// to become fully accessible game objects that allow the game to progress, rather than simply using char types.

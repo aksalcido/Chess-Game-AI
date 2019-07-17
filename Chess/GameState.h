@@ -6,6 +6,7 @@
 #include "Board.h"
 
 namespace Chess {
+
 	class GameState
 	{
 	public:
@@ -30,6 +31,12 @@ namespace Chess {
 		// Displays the Move made by the User
 		void displayMove(int startRow, int startColumn, int endRow, int endColumn) const;
 
+		// Displays to the user that their king is in check
+		void displayCheck() const;
+
+		// Displays the winner of the game to the console
+		void displayWinner() const;
+	
 		// Prompts the User a message argument to the console
 		void prompt(const char * message);
 
@@ -47,10 +54,16 @@ namespace Chess {
 		int turn;
 		bool GameOver;
 
+		// Checks if promotion has occured during the last turn, if so the necessary promotion rules are handled in this function
+		void promotionCheck(int row, int col);
+
+		// Displays the piece options to the User when Pawn Promotion is reached and accepts input on which GameObject they want
+		int displayPieceOptions();
+
 		// Returns a Boolean whether the coordinates (row, col) and (endRow, endCol) are on the board
 		bool playersMoveOnBoard(int row, int col, int endRow, int endCol) const;
 
-		// Returns a Boolean whether the Start Position is a GameObject and the start (row, col) must be the Player's piece
+		// Returns a Boolean whether the Start Position is a GameObject and the start (row, col) must be the Player's GameObject
 		bool isPlayersPiece(int row, int col) const;
 
 	};

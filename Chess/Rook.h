@@ -19,7 +19,6 @@ namespace Chess {
 		// Returns a vector of pairs of each possible move that can be made on the Board for the Rook
 		Moves acquireMoves(Board * ChessBoard) override;
 		
-
 		~Rook();
 
 	private:

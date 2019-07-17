@@ -19,7 +19,6 @@ namespace Chess {
 		// Returns a vector of pairs of each possible move that can be made on the Board for the Pawn
 		Moves acquireMoves(Board * ChessBoard) override;
 
-
 		~Pawn();
 
 	private:

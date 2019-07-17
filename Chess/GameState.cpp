@@ -12,13 +12,19 @@ void Chess::GameState::progress(int row, int col, int endRow, int endCol)
 	ChessBoard.castlingCheck(endRow, endCol);
 	ChessBoard.firstMoveCheck(endRow, endCol);
 	ChessBoard.updateCoordinates(endRow, endCol);
-	ChessBoard.playerStatus();
 
+	promotionCheck(endRow, endCol);
+	ChessBoard.playerStatus();
+	
 	nextTurn();
 
+	// Displays the Check to the User
+	if (ChessBoard.kingInCheck(turn))
+		displayCheck();
+
+	// Checks for Gameover whether Checkmate or Stalemate
 	try {
-		if (ChessBoard.kingInCheck(turn))
-			ChessBoard.gameFinishedCheck(turn);
+		ChessBoard.gameFinishedCheck(turn);
 	}
 	catch (GameOverException e) {
 		GameOver = true;
@@ -46,7 +52,7 @@ bool Chess::GameState::validateMove(int row, int col, int endRow, int endCol)
 {
 	// Checks if the coordinates are on the board and if so whether the start coordinates are the player's piece
 	if (playersMoveOnBoard(row, col, endRow, endCol) && isPlayersPiece(row, col)) {
-		return ChessBoard.validMove(row, col, endRow, endCol);
+		return ChessBoard.validMove(row, col, endRow, endCol) && ChessBoard.safeMove(row, col, endRow, endCol);
 	}
 
 	return false;
@@ -94,6 +100,58 @@ void Chess::GameState::display() const
 void Chess::GameState::displayMove(int startRow, int startColumn, int endRow, int endColumn) const
 {
 	std::cout << "Move: (" << startRow << ", " << startColumn << ") -> (" << endRow << ", " << endColumn << ")" << std::endl;
+}
+
+void Chess::GameState::displayCheck() const
+{
+	const char * player = (turn == white ? "White's " : "Black's ");
+	std::cout << player << "king is in check!" << std::endl;
+}
+
+void Chess::GameState::displayWinner() const
+{
+	const char * winner;
+
+	// Winner is the opposite player of the current turn
+	if (ChessBoard.kingInCheck(turn))
+	{
+		winner = (turn == white ? "black!" : "white!");
+		std::cout << "CHECKMATE! The winner of the match is " << winner << std::endl;
+	}
+
+	// STALEMATE !!!
+	else {
+		std::cout << "The Game has ended in a Stalemate!" << std::endl;
+	}
+}
+
+void Chess::GameState::promotionCheck(int row, int col)
+{
+	// Pawn Promotion requires input on the Users part for what piece they want
+	if (ChessBoard.promotion(row, col))
+	{
+		int userPromoted = displayPieceOptions();
+		ChessBoard.promote(row, col, userPromoted);
+	}
+}
+
+int Chess::GameState::displayPieceOptions()
+{
+	int promoted = -1;
+
+	std::cout << "1: Queen (Default)" << std::endl;
+	std::cout << "2: Rook" << std::endl;
+	std::cout << "3: Bishop" << std::endl;
+	std::cout << "4: Knight" << std::endl;
+	std::cout << "Promote: ";
+
+	std::cin >> promoted;
+	
+	// Default Queen will be put on the board if bad input
+	if (promoted < 1 || promoted > 4)
+		promoted = 1;
+
+	return promoted;
 }
 
 void Chess::GameState::prompt(const char * message)

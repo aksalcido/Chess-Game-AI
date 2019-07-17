@@ -99,6 +99,8 @@ namespace Chess
 		std::vector<Direction> directions;
 		Moves moves;
 
+	private:
+
 		void adjustForKing(Moves & newMoves, Board * ChessBoard);
 
 		void adjustForPieces(Moves path, Moves & newMoves);
