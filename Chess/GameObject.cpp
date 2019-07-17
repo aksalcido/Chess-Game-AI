@@ -105,10 +105,7 @@ void Chess::GameObject::adjustForKing(Moves & newMoves, Board * ChessBoard)
 	for (Moves::iterator it = moves.begin(); it != moves.end(); it++)
 	{
 		if (ChessBoard->safeMove(x, y, it->first, it->second))
-		{
-			std::cout << "safe move: " << "(" << (it->first) << ", " << (it->second) << ")" << std::endl;
 			newMoves.push_back(std::make_pair(it->first, it->second));
-		}
 	}
 }
 

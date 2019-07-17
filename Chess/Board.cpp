@@ -62,7 +62,7 @@ void Chess::Board::castlingCheck(int row, int col)
 }
 
 
-void Chess::Board::gameFinishedCheck(int turn)
+void Chess::Board::gameFinishedCheck(int turn, bool currentlyChecked)
 {
 	std::vector<GameObject*> pieces = (turn == black ? blackPieces : whitePieces);
 	Moves moves;
@@ -75,18 +75,25 @@ void Chess::Board::gameFinishedCheck(int turn)
 	{
 		moves = (*it)->acquireMoves(this);
 
-		// If the Player has moves available, the game is not over so we can break out of this check
-		if (moves.size() != 0) {
+		// If the player is currentlyChecked and if the Player has moves available, the game is not over so we can break out of this check
+		if (currentlyChecked) {
+			if (moves.size() != 0) {
+				outOfMoves = false;
+				break;
+			}
+		}
 
-			// DELETE THIS UNDER
-			std::cout << (*it)->displayPiece();
+		// Unfortunately when checking for a Stalemate, we have to test each specific move independently
+		else {
+			std::pair<int, int> pieceCoordinates = (*it)->getCoordinates();
 
 			for (int i = 0; i < moves.size(); i++) {
-				std::cout << "(" << moves[i].first << ", " << moves[i].second << ")" << std::endl;
-			}
 
-			outOfMoves = false;
-			break;
+				if (safeMove(pieceCoordinates.first, pieceCoordinates.second, moves[i].first, moves[i].second)) {
+					outOfMoves = false;
+					break;
+				}
+			}
 		}
 	}
 
@@ -171,7 +178,7 @@ bool Chess::Board::safeMove(int row, int col, int endRow, int endCol)
 	copy->updateCoordinates(endRow, endCol);
 	copy->playerStatus();
 
-	return ! copy->kingInCheck(pieceColor(row, col));
+	return ! copy->kingInCheck(copy->pieceColor(endRow, endCol));
 }
 
 

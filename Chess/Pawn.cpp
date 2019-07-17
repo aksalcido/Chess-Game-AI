@@ -43,7 +43,7 @@ void Chess::Pawn::forward(Board * ChessBoard)
 	int dx = (color == white ? -1 : 1);
 
 	// If Pawn has not moved yet, then capable of moving up two spaces
-	if (hasNotMoved && ChessBoard->emptySpace(x + 2 * dx, y))
+	if (hasNotMoved && ChessBoard->emptySpace(x + 2 * dx, y) && ChessBoard->emptySpace(x + 1 * dx, y))
 	{
 		moves.push_back(std::make_pair(x + 2 * dx, y));
 	}

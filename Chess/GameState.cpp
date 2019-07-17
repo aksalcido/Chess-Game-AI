@@ -22,10 +22,11 @@ void Chess::GameState::progress(int row, int col, int endRow, int endCol)
 	if (ChessBoard.kingInCheck(turn))
 		displayCheck();
 
-	// Checks for Gameover whether Checkmate or Stalemate
+	// Checks for Gameover whether Checkmate or Stalemate -- expensive function
 	try {
-		ChessBoard.gameFinishedCheck(turn);
+		ChessBoard.gameFinishedCheck(turn, ChessBoard.kingInCheck(turn));
 	}
+
 	catch (GameOverException e) {
 		GameOver = true;
 	}

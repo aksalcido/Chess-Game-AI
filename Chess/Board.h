@@ -44,7 +44,7 @@ namespace Chess {
 		void castlingCheck(int row, int col);
 
 		// Checks if the Game is complete at the end of a turn, if so raises a GameOverException that is caught in the GameState
-		void gameFinishedCheck(int turn);
+		void gameFinishedCheck(int turn, bool currentlyChecked);
 
 		// Checks if either Kings for both players is in Check after a turn has been made
 		void playerStatus();
@@ -91,7 +91,7 @@ namespace Chess {
 		std::vector<Moves> enemyPaths(int color);
 
 		// Returns a unique_ptr of the current Board state that will be deallocated naturally when not needed anymore
-		// Useful for possibilities of including AI and checking if the King is in checkmate ( NOT COMPLETE )
+		// Useful for possibilities of including AI and checking if the King is in checkmate
 		std::unique_ptr<Board> clone();
 
 		// Destructor for the Board Object, releases left over pieces that remain on the board after game is over
