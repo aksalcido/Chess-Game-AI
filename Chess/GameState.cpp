@@ -28,6 +28,21 @@ void Chess::GameState::progress(int row, int col, int endRow, int endCol)
 	}
 }
 
+void Chess::GameState::progressAI()
+{
+	Move AI_Move = ChessBot.chooseMove(&ChessBoard);
+	std::pair<int, int> start = AI_Move.first, end = AI_Move.second;
+
+	// This while loop will only be called if the AI tries to do an illegal move which would put his King in Check
+	while (! ChessBoard.safeMove(start.first, start.second, end.first, end.second))
+	{
+		AI_Move = ChessBot.chooseMove(&ChessBoard);
+		start = AI_Move.first, end = AI_Move.second;
+	}
+
+	progress(start.first, start.second, end.first, end.second);
+}
+
 void Chess::GameState::movement(int row, int col, int endRow, int endCol)
 {
 	if (ChessBoard.emptySpace(endRow, endCol))
@@ -40,6 +55,11 @@ void Chess::GameState::movement(int row, int col, int endRow, int endCol)
 	}
 }
 
+void Chess::GameState::initializeAI(int difficulty)
+{
+	ChessBot.setDifficulty(difficulty);
+}
+
 void Chess::GameState::checksAndUpdates(int row, int col)
 {
 	ChessBoard.castlingCheck(row, col);
@@ -50,6 +70,11 @@ void Chess::GameState::checksAndUpdates(int row, int col)
 void Chess::GameState::nextTurn()
 {
 	turn = (turn == white ? black : white);
+}
+
+bool Chess::GameState::playersTurn()
+{
+	return turn == white;
 }
 
 bool Chess::GameState::validateMove(int row, int col, int endRow, int endCol)

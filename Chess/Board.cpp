@@ -228,6 +228,24 @@ int Chess::Board::pieceColor(int row, int col) const
 	return board[row][col]->pieceColor();
 }
 
+GameObjectMoves Chess::Board::allMoves(int color)
+{
+	std::vector<GameObject*> container = (color == white ? whitePieces : blackPieces);
+	GameObjectMoves moveMap;
+	Moves pieceMoves;
+	std::pair<int, int> coordinates;
+
+	for (int i = 0; i < container.size(); i++)
+	{
+		coordinates = container[i]->getCoordinates();
+		pieceMoves = container[i]->acquireMoves(this);
+
+		moveMap.insert({ coordinates, pieceMoves });
+	}
+
+	return moveMap;
+}
+
 void Chess::Board::updatePieces(GameObject * pieceBeingRemoved)
 {
 	std::vector<GameObject*> * container = &(pieceBeingRemoved->pieceColor() == white ? whitePieces : blackPieces);
@@ -237,6 +255,7 @@ void Chess::Board::updatePieces(GameObject * pieceBeingRemoved)
 		if ((*container)[i] == pieceBeingRemoved)
 		{
 			container->erase((*container).begin() + i);
+			break;
 		}
 	}
 

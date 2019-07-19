@@ -4,6 +4,7 @@
 #include <iostream>
 #include <memory>
 #include "Board.h"
+#include "ChessAI.h"
 
 namespace Chess {
 
@@ -16,11 +17,18 @@ namespace Chess {
 		// Progresses the Game of Chess updating the current Gamestate each time
 		void progress(int row, int col, int endRow, int endCol);
 
+		void progressAI();
+
 		// Completes the movement made on the board using the coordinates made from the user
 		void movement(int row, int col, int endRow, int endCol);
 
+		void initializeAI(int difficulty);
+
 		// Switches the turn to the next player
 		void nextTurn();
+
+		// Returns a Boolean true if it is the Player's turn, false otherwise.
+		bool playersTurn();
 
 		// Returns a Boolean in regards to if the move is a valid for the GameState, false otherwise.
 		bool validateMove(int row, int col, int endRow, int endCol);
@@ -51,6 +59,7 @@ namespace Chess {
 
 	private:
 		Board ChessBoard;
+		ChessAI ChessBot;
 		int turn;
 		bool GameOver;
 

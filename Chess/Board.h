@@ -85,6 +85,8 @@ namespace Chess {
 		// Returns the int representation of the color of the piece at coordinate (row, col) on the board
 		int pieceColor(int row, int col) const;
 
+		GameObjectMoves allMoves(int color);
+
 		// Returns a Vector of the Moves for each GameObject that takes a Path to check the King GameObject
 		// The Vector length will represent how many GameObjects are checking the King, so typically it will be of length 1, any higher will
 		// mean that there are multiple GameObjects checking the King and then only the King is capable of movement. If no movement, then Player is in checkmate

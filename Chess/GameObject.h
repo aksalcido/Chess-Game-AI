@@ -2,6 +2,7 @@
 #define GAMEOBJECT_H
 #pragma once
 #include <vector>
+#include <map>
 #include "Direction.h"
 #include "GameOverException.h"
 
@@ -25,6 +26,7 @@
 
 
 typedef std::vector<std::pair<int, int>> Moves;
+typedef std::map<std::pair<int, int>, Moves> GameObjectMoves;
 
 namespace Chess 
 {
