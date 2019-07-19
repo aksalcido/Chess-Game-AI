@@ -100,9 +100,10 @@ namespace Chess
 		Moves moves;
 
 	private:
-
+		// Adjust the moves that the King is capable of taking when in check
 		void adjustForKing(Moves & newMoves, Board * ChessBoard);
 
+		// Adjust the moves that the other GameObjects are capable of taking when the King is in check
 		void adjustForPieces(Moves path, Moves & newMoves);
 
 

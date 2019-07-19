@@ -57,6 +57,9 @@ namespace Chess {
 		// Checks if promotion has occured during the last turn, if so the necessary promotion rules are handled in this function
 		void promotionCheck(int row, int col);
 
+		// Checks if a move was castling, ensures the GameObject's boolean hasNotMoved is changed, and updates the coordinates of the GameObject
+		void checksAndUpdates(int row, int col);
+
 		// Displays the piece options to the User when Pawn Promotion is reached and accepts input on which GameObject they want
 		int displayPieceOptions();
 

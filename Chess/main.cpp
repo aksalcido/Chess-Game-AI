@@ -11,7 +11,7 @@ int main()
 	// Displays the Board to the User
 	game.display();
 
-	while ( game.continuing() ) {
+	while (game.continuing()) {
 		// Prompts the User and proceeds to take input
 		game.prompt("Input your start & end row/column (ex: 3 1 5 6): ");
 		game.input(startRow, startColumn, endRow, endColumn);
@@ -34,7 +34,7 @@ int main()
 		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	}
 
-	game.displayWinner();
+		game.displayWinner();
 
 	return 0;
 }

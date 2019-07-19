@@ -1,13 +1,2 @@
-﻿  GameState.cpp
-  Board.cpp
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  main.cpp
-  Rook.cpp
-  Queen.cpp
-  Pawn.cpp
-  Knight.cpp
-  King.cpp
-  GameObject.cpp
-  Bishop.cpp
+﻿  main.cpp
   Chess.vcxproj -> C:\Users\Armando\Desktop\Coding Files\VisualStudio Projects\C++\Projects\Chess\Chess-Game-AI\x64\Debug\Chess.exe

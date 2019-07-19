@@ -8,11 +8,7 @@ Chess::GameState::GameState() : turn(white), GameOver(false)
 void Chess::GameState::progress(int row, int col, int endRow, int endCol)
 {
 	movement(row, col, endRow, endCol);
-
-	ChessBoard.castlingCheck(endRow, endCol);
-	ChessBoard.firstMoveCheck(endRow, endCol);
-	ChessBoard.updateCoordinates(endRow, endCol);
-
+	checksAndUpdates(endRow, endCol);
 	promotionCheck(endRow, endCol);
 	ChessBoard.playerStatus();
 	
@@ -42,6 +38,13 @@ void Chess::GameState::movement(int row, int col, int endRow, int endCol)
 	{
 		ChessBoard.movementToEnemy(row, col, endRow, endCol);
 	}
+}
+
+void Chess::GameState::checksAndUpdates(int row, int col)
+{
+	ChessBoard.castlingCheck(row, col);
+	ChessBoard.firstMoveCheck(row, col);
+	ChessBoard.updateCoordinates(row, col);
 }
 
 void Chess::GameState::nextTurn()
@@ -148,7 +151,7 @@ int Chess::GameState::displayPieceOptions()
 
 	std::cin >> promoted;
 	
-	// Default Queen will be put on the board if bad input
+	// Default -- Queen will be put on the board if receives Bad Input from User
 	if (promoted < 1 || promoted > 4)
 		promoted = 1;
 

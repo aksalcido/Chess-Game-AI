@@ -77,6 +77,7 @@ void Chess::Board::gameFinishedCheck(int turn, bool currentlyChecked)
 
 		// If the player is currentlyChecked and if the Player has moves available, the game is not over so we can break out of this check
 		if (currentlyChecked) {
+			
 			if (moves.size() != 0) {
 				outOfMoves = false;
 				break;
