@@ -23,7 +23,7 @@ void Chess::Queen::copy(const GameObject * piece)
 	*this = *(Queen*)(piece);
 }
 
-Moves Chess::Queen::acquireMoves(Board * ChessBoard)
+Moves Chess::Queen::acquireMoves(const Board * ChessBoard)
 {
 	// Clears moves that might have been acquired in previous turns
 	moves.clear();
@@ -42,7 +42,7 @@ Moves Chess::Queen::acquireMoves(Board * ChessBoard)
 
 #include <iostream>
 
-void Chess::Queen::mobility(Board * ChessBoard)
+void Chess::Queen::mobility(const Board * ChessBoard)
 {
 	int dx, dy;
 

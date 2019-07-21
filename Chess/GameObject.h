@@ -53,10 +53,10 @@ namespace Chess
 		virtual void copy(const GameObject * piece) = 0;
 
 		// Virtual function used on any of the piece GameObjects on the board since they all have different movement patterns
-		virtual Moves acquireMoves(Board * ChessBoard) = 0;
+		virtual Moves acquireMoves(const Board * ChessBoard) = 0;
 
 		// Adjusts the moves to be applicable for the King being in Check
-		Moves adjustMoves(Board * ChessBoard);
+		Moves adjustMoves(const Board * ChessBoard);
 
 		// Returns a pair of the coordinates of the GameObject
 		std::pair<int, int> getCoordinates();
@@ -86,10 +86,10 @@ namespace Chess
 		bool oppositePlayer(int player);
 
 		// Returns a Boolean True if the GameObject calling this function is capable of attacking coordinates (enemyRow, enemyCol). False otherwise
-		bool canAttackEnemy(int enemyRow, int enemyCol, Board * ChessBoard);
+		bool canAttackEnemy(int enemyRow, int enemyCol, const Board * ChessBoard);
 		
 		// Returns a Boolean True if the GameObject calling this function has their King in check
-		bool playerInCheck(Board * ChessBoard);
+		bool playerInCheck(const Board * ChessBoard) const;
 
 		// Destructor for the GameObject
 		~GameObject();
@@ -103,7 +103,7 @@ namespace Chess
 
 	private:
 		// Adjust the moves that the King is capable of taking when in check
-		void adjustForKing(Moves & newMoves, Board * ChessBoard);
+		void adjustForKing(Moves & newMoves, const Board * ChessBoard);
 
 		// Adjust the moves that the other GameObjects are capable of taking when the King is in check
 		void adjustForPieces(Moves path, Moves & newMoves);

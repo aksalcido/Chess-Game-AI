@@ -39,7 +39,7 @@ bool Chess::King::inCheck()
 	return checked;
 }
 
-Moves Chess::King::acquireMoves(Board * ChessBoard)
+Moves Chess::King::acquireMoves(const Board * ChessBoard)
 {
 	// Clears moves that might have been acquired in previous turns
 	moves.clear();
@@ -64,7 +64,7 @@ std::vector <Moves> Chess::King::enemies()
 	return paths;
 }
 
-void Chess::King::limitedMobility(Board * ChessBoard)
+void Chess::King::limitedMobility(const Board * ChessBoard)
 {
 	int dx, dy;
 
@@ -80,7 +80,7 @@ void Chess::King::limitedMobility(Board * ChessBoard)
 	}
 }
 
-void Chess::King::castling(Board * ChessBoard)
+void Chess::King::castling(const Board * ChessBoard)
 {
 	// Rook x-Coordinate for Castling which differs depending on which Player is trying to castle
 	int rx = (color == white ? dimension - 1 : 0);
@@ -107,7 +107,7 @@ void Chess::King::checkedStatus(Board * ChessBoard)
 	checked = currentlyChecked;
 }
 
-void Chess::King::checkForEnemies(Board * ChessBoard, bool & currentlyChecked)
+void Chess::King::checkForEnemies(const Board * ChessBoard, bool & currentlyChecked)
 {
 	int dx, dy;
 	Moves path;
@@ -147,7 +147,7 @@ void Chess::King::checkForEnemies(Board * ChessBoard, bool & currentlyChecked)
 	}
 }
 
-void Chess::King::checkForKnights(Board * ChessBoard, bool & currentlyChecked)
+void Chess::King::checkForKnights(const Board * ChessBoard, bool & currentlyChecked)
 {
 	int dx, dy;
 

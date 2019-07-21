@@ -17,13 +17,13 @@ namespace Chess {
 		void copy(const GameObject * piece) override;
 
 		// Returns a vector of pairs of each possible move that can be made on the Board for the Rook
-		Moves acquireMoves(Board * ChessBoard) override;
+		Moves acquireMoves(const Board * ChessBoard) override;
 		
 		~Rook();
 
 	private:
 		// Handles lateral movement that the Rook can make on the Board. Adds each possible move as a pair of (row, column) to the 'moves' vector.
-		void lateral(Board * ChessBoard);
+		void lateral(const Board * ChessBoard);
 	};
 };
 

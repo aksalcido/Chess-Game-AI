@@ -17,13 +17,13 @@ namespace Chess {
 		void copy(const GameObject * piece) override;
 
 		// Returns a vector of pairs of each possible move that can be made on the Board for the Knight
-		Moves acquireMoves(Board * ChessBoard) override;
+		Moves acquireMoves(const Board * ChessBoard) override;
 
 		~Knight();
 
 	private:
 		// Handles the Knight's jump movement that it can make on the Board. Adds each possible move as a pair of (row, column) to the 'moves' vector.
-		void jump(Board * ChessBoard);
+		void jump(const Board * ChessBoard);
 	};
 };
 

@@ -17,13 +17,13 @@ namespace Chess {
 		void copy(const GameObject * piece) override;
 
 		// Returns a vector of pairs of each possible move that can be made on the Board for the Queen
-		Moves acquireMoves(Board * ChessBoard) override;
+		Moves acquireMoves(const Board * ChessBoard) override;
 
 		~Queen();
 	
 	private:
 		// Handles all movement that the Queen can make on the Board. Adds each possible move as a pair of (row, column) to the 'moves' vector.
-		void mobility(Board * ChessBoard);
+		void mobility(const Board * ChessBoard);
 	};
 };
 

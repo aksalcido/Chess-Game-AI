@@ -21,7 +21,7 @@ void Chess::Bishop::copy(const GameObject * piece)
 	*this = *(Bishop*)(piece);
 }
 
-Moves Chess::Bishop::acquireMoves(Board * ChessBoard)
+Moves Chess::Bishop::acquireMoves(const Board * ChessBoard)
 {
 	// Clears moves that might have been acquired in previous turns
 	moves.clear();
@@ -38,7 +38,7 @@ Moves Chess::Bishop::acquireMoves(Board * ChessBoard)
 	return moves;
 }
 
-void Chess::Bishop::diagonal(Board * ChessBoard)
+void Chess::Bishop::diagonal(const Board * ChessBoard)
 {
 	int dx, dy;
 

@@ -21,7 +21,7 @@ void Chess::Rook::copy(const GameObject * piece)
 	*this = *(Rook*)(piece);
 }
 
-Moves Chess::Rook::acquireMoves(Board * ChessBoard)
+Moves Chess::Rook::acquireMoves(const Board * ChessBoard)
 {
 	// Clears moves that might have been acquired in previous turns
 	moves.clear();
@@ -38,7 +38,7 @@ Moves Chess::Rook::acquireMoves(Board * ChessBoard)
 	return moves;
 }
 
-void Chess::Rook::lateral(Board * ChessBoard)
+void Chess::Rook::lateral(const Board * ChessBoard)
 {
 	int dx, dy;
 

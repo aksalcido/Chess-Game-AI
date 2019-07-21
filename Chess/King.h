@@ -20,7 +20,7 @@ namespace Chess {
 		void copy(const GameObject * piece) override;
 
 		// Returns a vector of pairs of each possible move that can be made on the Board for the King
-		Moves acquireMoves(Board * ChessBoard) override;
+		Moves acquireMoves(const Board * ChessBoard) override;
 
 		// Goes through possible threats and checks if the King is currently in check, if so 'checked' boolean is changed to True. False otherwise
 		void checkedStatus(Board * ChessBoard);
@@ -41,16 +41,16 @@ namespace Chess {
 		std::vector<Moves> paths;
 
 		// Handles lateral movement that the King can make on the Board. Adds each possible move as a pair of (row, column) to the 'moves' vector.
-		void limitedMobility(Board * ChessBoard);
+		void limitedMobility(const Board * ChessBoard);
 
 		// Checks if it is possible to castle, if so includes the move inside the King's possible moves
-		void castling(Board * ChessBoard);
+		void castling(const Board * ChessBoard);
 
 		// Checks if there are Enemies that can possibly place the King in Check, if so then changes the boolean 'checked' to be True, false otherwise
-		void checkForEnemies(Board * ChessBoard, bool & currentlyChecked);
+		void checkForEnemies(const Board * ChessBoard, bool & currentlyChecked);
 
 		// Used in checkForEnemies, has to account for the unique movement of Knights
-		void checkForKnights(Board * ChessBoard, bool & currentlyChecked);
+		void checkForKnights(const Board * ChessBoard, bool & currentlyChecked);
 
 	};
 };

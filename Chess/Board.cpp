@@ -47,6 +47,21 @@ void Chess::Board::playerStatus()
 	}
 }
 
+void Chess::Board::minmaxUpdate(std::pair<int, int> start, std::pair<int, int> end)
+{
+	if (emptySpace(end.first, end.second))
+	{
+		movementToEmptySquare(start.first, start.second, end.first, end.second);
+	}
+	else
+	{
+		movementToEnemy(start.first, start.second, end.first, end.second);
+	}
+
+	updateCoordinates(end.first, end.second);
+	playerStatus();
+}
+
 void Chess::Board::firstMoveCheck(int row, int col)
 {
 	board[row][col]->firstMoveOccured();
@@ -152,7 +167,7 @@ bool Chess::Board::promotion(int row, int col)
 	return ((piece(row, col) == WHITE_PAWN || piece(row, col) == BLACK_PAWN) && row == maxRow);
 }
 
-bool Chess::Board::pieceHasNotMoved(int row, int col)
+bool Chess::Board::pieceHasNotMoved(int row, int col) const
 {
 	return board[row][col]->initialPosition();
 }
@@ -163,7 +178,7 @@ bool Chess::Board::validMove(int row, int col, int endRow, int endCol)
 }
 
 
-bool Chess::Board::safeMove(int row, int col, int endRow, int endCol)
+bool Chess::Board::safeMove(int row, int col, int endRow, int endCol) const
 {
 	std::unique_ptr<Board> copy = clone();
 
@@ -198,7 +213,7 @@ bool Chess::Board::enemySpace(int row, int col, int dx, int dy) const
 	return false;
 }
 
-bool Chess::Board::enemyCheckingKing(int enemyRow, int enemyCol, int kingRow, int kingCol)
+bool Chess::Board::enemyCheckingKing(int enemyRow, int enemyCol, int kingRow, int kingCol) const
 {
 	return board[enemyRow][enemyCol]->canAttackEnemy(kingRow, kingCol, this);
 }
@@ -228,12 +243,33 @@ int Chess::Board::pieceColor(int row, int col) const
 	return board[row][col]->pieceColor();
 }
 
-GameObjectMoves Chess::Board::allMoves(int color)
+int Chess::Board::points(int color) const
 {
+	int total = 0;
+	char rep;
+
 	std::vector<GameObject*> container = (color == white ? whitePieces : blackPieces);
+	
+	for (int i = 0; i < container.size(); i++)
+	{
+		rep = container[i]->displayPiece();
+		total += pieceValues.at(rep);
+	}
+
+	return total;
+}
+
+GameObjectMoves Chess::Board::allMoves(int color) const
+{
+	// Container will be the dependent on the argument 'color' so that we are iterating through the game pieces of the correct player
+	std::vector<GameObject*> container = (color == white ? whitePieces : blackPieces);
+
+	// Initialize a map that will be the returned value of the Coordinates and Moves
 	GameObjectMoves moveMap;
-	Moves pieceMoves;
+
+	// Initialize the key, value pairs for readability
 	std::pair<int, int> coordinates;
+	Moves pieceMoves;
 
 	for (int i = 0; i < container.size(); i++)
 	{
@@ -265,7 +301,7 @@ void Chess::Board::updatePieces(GameObject * pieceBeingRemoved)
 	}
 }
 
-std::vector<Moves> Chess::Board::enemyPaths(int color)
+std::vector<Moves> Chess::Board::enemyPaths(int color) const
 {
 	if (color == white)
 		return ((King*)whiteKing)->enemies();
@@ -273,8 +309,7 @@ std::vector<Moves> Chess::Board::enemyPaths(int color)
 		return ((King*)blackKing)->enemies();
 }
 
-
-std::unique_ptr<Chess::Board> Chess::Board::clone()
+std::unique_ptr<Chess::Board> Chess::Board::clone() const
 {
 	Board * newBoard = new Board(*this);
 	std::unique_ptr<Board> board_ptr = std::make_unique<Board>( *newBoard );
@@ -379,52 +414,64 @@ void Chess::Board::initialize(GameObject(*board[dimension][dimension]))
 
 			case BLACK_ROOK:
 				board[i][j] = new Rook(i, j, black, BLACK_ROOK);
+				pieceValues.insert({ BLACK_ROOK , 500 });
 				break;
 
 			case WHITE_ROOK:
 				board[i][j] = new Rook(i, j, white, WHITE_ROOK);
+				pieceValues.insert({ WHITE_ROOK , 500 });
 				break;
 
 			case BLACK_KNIGHT:
 				board[i][j] = new Knight(i, j, black, BLACK_KNIGHT);
+				pieceValues.insert({ BLACK_KNIGHT , 250 });
 				break;
 
 			case WHITE_KNIGHT:
 				board[i][j] = new Knight(i, j, white, WHITE_KNIGHT);
+				pieceValues.insert({ WHITE_KNIGHT , 250 });
 				break;
 
 			case BLACK_BISHOP:
 				board[i][j] = new Bishop(i, j, black, BLACK_BISHOP);
+				pieceValues.insert({ BLACK_BISHOP , 250 });
 				break;
 
 			case WHITE_BISHOP:
 				board[i][j] = new Bishop(i, j, white, WHITE_BISHOP);
+				pieceValues.insert({ WHITE_BISHOP , 250 });
 				break;
 
 			case BLACK_QUEEN:
 				board[i][j] = new Queen(i, j, black, BLACK_QUEEN);
+				pieceValues.insert({ BLACK_QUEEN , 1000 });
 				break;
 
 			case WHITE_QUEEN:
 				board[i][j] = new Queen(i, j, white, WHITE_QUEEN);
+				pieceValues.insert({ WHITE_QUEEN , 1000 });
 				break;
 
 			case BLACK_KING:
 				board[i][j] = new King(i, j, black, BLACK_KING);
+				pieceValues.insert({ BLACK_KING , 10000 });
 				blackKing = board[i][j];
 				break;
 
 			case WHITE_KING:
 				board[i][j] = new King(i, j, white, WHITE_KING);
+				pieceValues.insert({ WHITE_KING , 10000 });
 				whiteKing = board[i][j];
 				break;
 
 			case BLACK_PAWN:
 				board[i][j] = new Pawn(i, j, black, BLACK_PAWN);
+				pieceValues.insert({ BLACK_PAWN , 50 });
 				break;
 
 			case WHITE_PAWN:
 				board[i][j] = new Pawn(i, j, white, WHITE_PAWN);
+				pieceValues.insert({ WHITE_PAWN , 50 });
 				break;
 
 			default:

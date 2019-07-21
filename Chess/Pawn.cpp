@@ -20,7 +20,7 @@ void Chess::Pawn::copy(const GameObject * piece)
 	*this = *(Pawn*)(piece);
 }
 
-Moves Chess::Pawn::acquireMoves(Board * ChessBoard)
+Moves Chess::Pawn::acquireMoves(const Board * ChessBoard)
 {
 	// Clears moves that might have been acquired in previous turns
 	moves.clear();
@@ -38,7 +38,7 @@ Moves Chess::Pawn::acquireMoves(Board * ChessBoard)
 	return moves;
 }
 
-void Chess::Pawn::forward(Board * ChessBoard)
+void Chess::Pawn::forward(const Board * ChessBoard)
 {
 	int dx = (color == white ? -1 : 1);
 
@@ -55,7 +55,7 @@ void Chess::Pawn::forward(Board * ChessBoard)
 	}
 }
 
-void Chess::Pawn::diagonal(Board * ChessBoard)
+void Chess::Pawn::diagonal(const Board * ChessBoard)
 {
 	int dx = x + (color == white ? -1 : 1);
 

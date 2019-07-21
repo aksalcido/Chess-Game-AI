@@ -49,6 +49,8 @@ namespace Chess {
 		// Checks if either Kings for both players is in Check after a turn has been made
 		void playerStatus();
 		
+		void minmaxUpdate(std::pair<int, int> start, std::pair<int, int> end);
+
 		// Handles the promotion once received the user inputted argument 'promoted' on which piece they want
 		void promote(int row, int col, int promoted);
 
@@ -56,13 +58,13 @@ namespace Chess {
 		bool promotion(int row, int col);
 
 		// Returns a boolean True if a GameObject at coordinates (row, col) has not been moved on the board. False otherwise
-		bool pieceHasNotMoved(int row, int col);
+		bool pieceHasNotMoved(int row, int col) const;
 
 		// Returns a boolean True if the move from coordinates (row, col) -> (endRow, endCol) is a valid move that can be made. False otherwise
 		bool validMove(int row, int col, int endRow, int endCol);
 
 		// Returns a boolean True if the move is safe in regards to the King not being in check after making the move from (row, col) -> (endRow, endCol). False otherwise
-		bool safeMove(int row, int col, int endRow, int endCol);
+		bool safeMove(int row, int col, int endRow, int endCol) const;
 
 		// Returns a boolean True if the coordinates (row, col) are an empty space on the board. False otherwise
 		bool emptySpace(int row, int col) const;
@@ -71,7 +73,7 @@ namespace Chess {
 		bool enemySpace(int row, int col, int dx, int dy) const;
 
 		// Returns a boolean True if the enemy at coordinates (enemyRow, enemyCol) is able to move to coordinates of the king -- hence placing the King in Check
-		bool enemyCheckingKing(int enemyRow, int enemyCol, int kingRow, int kingCol);
+		bool enemyCheckingKing(int enemyRow, int enemyCol, int kingRow, int kingCol) const;
 
 		// Returnsa boolean True if the row and column argument remain in bounds on the board. False otherwise
 		bool inBounds(int row, int col) const;
@@ -85,16 +87,20 @@ namespace Chess {
 		// Returns the int representation of the color of the piece at coordinate (row, col) on the board
 		int pieceColor(int row, int col) const;
 
-		GameObjectMoves allMoves(int color);
+		// Returns an int representing the value of the GameObjects that the player has
+		int points(int color) const;
+
+		// Returns a map containing the coordinates of each GameObject as the key, with respective moves as the value
+		GameObjectMoves allMoves(int color) const;
 
 		// Returns a Vector of the Moves for each GameObject that takes a Path to check the King GameObject
 		// The Vector length will represent how many GameObjects are checking the King, so typically it will be of length 1, any higher will
 		// mean that there are multiple GameObjects checking the King and then only the King is capable of movement. If no movement, then Player is in checkmate
-		std::vector<Moves> enemyPaths(int color);
+		std::vector<Moves> enemyPaths(int color) const;
 
 		// Returns a unique_ptr of the current Board state that will be deallocated naturally when not needed anymore
 		// Useful for possibilities of including AI and checking if the King is in checkmate
-		std::unique_ptr<Board> clone();
+		std::unique_ptr<Board> clone() const;
 
 		// Destructor for the Board Object, releases left over pieces that remain on the board after game is over
 		~Board();
@@ -115,6 +121,8 @@ namespace Chess {
 
 		// 2 Vectors needed to hold all of the GameObject pieces for each player
 		std::vector<GameObject*> whitePieces, blackPieces;
+
+		std::map<char, int> pieceValues;
 
 		// 2 GameObjects needed to keep track of the King for each player -- most important piece on the Board
 		GameObject * whiteKing, * blackKing;

@@ -22,7 +22,7 @@ void Chess::Knight::copy(const GameObject * piece)
 	*this = *(Knight*)(piece);
 }
 
-Moves Chess::Knight::acquireMoves(Board * ChessBoard)
+Moves Chess::Knight::acquireMoves(const Board * ChessBoard)
 {
 	// Clears moves that might have been acquired in previous turns
 	moves.clear();
@@ -39,7 +39,7 @@ Moves Chess::Knight::acquireMoves(Board * ChessBoard)
 	return moves;
 }
 
-void Chess::Knight::jump(Board * ChessBoard)
+void Chess::Knight::jump(const Board * ChessBoard)
 {
 	int dx, dy;
 

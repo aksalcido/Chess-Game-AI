@@ -76,7 +76,7 @@ void Chess::GameObject::firstMoveOccured()
 		hasNotMoved = false;
 }
 
-Moves Chess::GameObject::adjustMoves(Board * ChessBoard)
+Moves Chess::GameObject::adjustMoves(const Board * ChessBoard)
 {
 	std::vector<Moves> enemyPaths = ChessBoard->enemyPaths(color);
 	
@@ -100,7 +100,7 @@ Moves Chess::GameObject::adjustMoves(Board * ChessBoard)
 }
 
 
-void Chess::GameObject::adjustForKing(Moves & newMoves, Board * ChessBoard)
+void Chess::GameObject::adjustForKing(Moves & newMoves, const Board * ChessBoard)
 {
 	for (Moves::iterator it = moves.begin(); it != moves.end(); it++)
 	{
@@ -128,7 +128,7 @@ bool Chess::GameObject::oppositePlayer(int player)
 	return color != player;
 }
 
-bool Chess::GameObject::canAttackEnemy(int enemyRow, int enemyCol, Board * ChessBoard)
+bool Chess::GameObject::canAttackEnemy(int enemyRow, int enemyCol, const Board * ChessBoard)
 {
 	moves = acquireMoves(ChessBoard);
 
@@ -141,7 +141,7 @@ bool Chess::GameObject::canAttackEnemy(int enemyRow, int enemyCol, Board * Chess
 	return false;
 }
 
-bool Chess::GameObject::playerInCheck(Board * ChessBoard)
+bool Chess::GameObject::playerInCheck(const Board * ChessBoard) const
 {
 	return ChessBoard->kingInCheck(color);
 }
