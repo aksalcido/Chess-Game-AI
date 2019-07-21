@@ -49,6 +49,7 @@ namespace Chess {
 		// Checks if either Kings for both players is in Check after a turn has been made
 		void playerStatus();
 		
+		// Specific move updating only done through a board clone. This function is only called in the minmax algorithm and no where else
 		void minmaxUpdate(std::pair<int, int> start, std::pair<int, int> end);
 
 		// Handles the promotion once received the user inputted argument 'promoted' on which piece they want
@@ -75,7 +76,7 @@ namespace Chess {
 		// Returns a boolean True if the enemy at coordinates (enemyRow, enemyCol) is able to move to coordinates of the king -- hence placing the King in Check
 		bool enemyCheckingKing(int enemyRow, int enemyCol, int kingRow, int kingCol) const;
 
-		// Returnsa boolean True if the row and column argument remain in bounds on the board. False otherwise
+		// Returns a boolean True if the row and column argument remain in bounds on the board. False otherwise
 		bool inBounds(int row, int col) const;
 
 		// Returns a Boolean True if the argument 'color' representing the Player has their King in check
@@ -122,6 +123,7 @@ namespace Chess {
 		// 2 Vectors needed to hold all of the GameObject pieces for each player
 		std::vector<GameObject*> whitePieces, blackPieces;
 
+		// A map to store the value-worth of the GameObjects
 		std::map<char, int> pieceValues;
 
 		// 2 GameObjects needed to keep track of the King for each player -- most important piece on the Board

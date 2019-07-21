@@ -20,23 +20,32 @@ namespace Chess {
 		~Tables();
 
 	private:
+		// These 2d arrays store the value of every position possible for each GameObject, every position is hardcoded 
+		// accordingly to the source used above.
 		int WhiteKingPositions[dimension][dimension], WhiteQueenPositions[dimension][dimension], WhiteRookPositions[dimension][dimension],
 			WhiteBishopPositions[dimension][dimension], WhiteKnightPositions[dimension][dimension], WhitePawnPositions[dimension][dimension],
 			BlackKingPositions[dimension][dimension], BlackQueenPositions[dimension][dimension], BlackRookPositions[dimension][dimension],
 			BlackBishopPositions[dimension][dimension], BlackKnightPositions[dimension][dimension], BlackPawnPositions[dimension][dimension];
-		
+
+		// Sets up the WhiteGameObjectPosition and the BlackGameObjectPosition using the 2d array 'pos'
 		void setup(int pos[dimension][dimension], int whitePos[dimension][dimension], int blackPos[dimension][dimension]);
 
+		// Initialzies the WhiteKingPositions and the BlackKingPositions
 		void initializeKingTable();
 
+		// Initializes the WhiteQueenPositions and the BlackQueenPositions
 		void initializeQueenTable();
 
+		// Initializes the WhiteRookPositions and the BlackRookPositions
 		void initializeRookTable();
 
+		// Initializes the WhiteBishopPositions and the BlackBishopPositions
 		void initializeBishopTable();
 
+		// Initializes the WhiteKnightPositions and the BlackKnightPositions
 		void initializeKnightTable();
 
+		// Initializes the WhitePawnPositions and the BlackPawnPositions
 		void initializePawnTable();
 	};
 }

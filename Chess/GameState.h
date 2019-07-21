@@ -17,11 +17,13 @@ namespace Chess {
 		// Progresses the Game of Chess updating the current Gamestate each time
 		void progress(int row, int col, int endRow, int endCol);
 
+		// Progresses the Game of Chess for the AI by determining a move
 		void progressAI();
 
 		// Completes the movement made on the board using the coordinates made from the user
 		void movement(int row, int col, int endRow, int endCol);
 
+		// Initializes the AI with the user input 'difficulty' to assign a difficulty to the AI
 		void initializeAI(int difficulty);
 
 		// Switches the turn to the next player

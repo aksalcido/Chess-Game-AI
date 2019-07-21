@@ -52,31 +52,36 @@ Move Chess::ChessAI::easyMove(Board * ChessBoard)
 
 	return Move{ coordinates, move };
 }
+#include <iostream>
 
 Move Chess::ChessAI::normalMove(Board * ChessBoard)
 {
 	std::map<int, Move> moveMap;
-	int minmax = search(MAX_DEPTH, *ChessBoard, moveMap, 0);
+	int minmax = search(MAX_DEPTH, *ChessBoard, moveMap, 0, black, std::numeric_limits<int>::min(), std::numeric_limits<int>::max());
+
+	std::cout << "minmax: " << minmax << std::endl;
 
 	return moveMap[minmax];
 }
 
-int Chess::ChessAI::search(int depth, const Board & ChessBoard, std::map<int, Move> & moveMap, int bonus)
+int Chess::ChessAI::search(int depth, const Board & ChessBoard, std::map<int, Move> & moveMap, int bonus, int turn, int alpha, int beta)
 {
-	if (depth == 0)
+	if (depth == 0) {
 		return evaluate(ChessBoard, bonus);
+	}
 
 	int minmax, moveScore = 0, moveBonus = 0;
+	int nextTurn = (turn == black ? white : black);
 	GameObjectMoves allMoves;
 	std::pair<int, int> coordinates, endCoordinates;
 
 	// Player's Turn -- White Player
-	if (depth % 2 == 0)
+	if (turn == white)
 	{
 		// Absolute min() value for an integer to store is necessary for the Player's Turn
 		minmax = std::numeric_limits<int>::min();
 		allMoves = ChessBoard.allMoves(white);
-
+		
 		for (GameObjectMoves::iterator it = allMoves.begin(); it != allMoves.end(); it++)
 		{
 			// These Coordinates represent the GameObject we are going to move
@@ -86,12 +91,18 @@ int Chess::ChessAI::search(int depth, const Board & ChessBoard, std::map<int, Mo
 			{
 				std::unique_ptr<Board> copy = ChessBoard.clone();
 				endCoordinates = it->second[i];
-				moveBonus = bonus + bonusPoints(endCoordinates.first, endCoordinates.second, copy->piece(coordinates.first, coordinates.second));
 				copy->minmaxUpdate(coordinates, endCoordinates);
 
 				// minmaxUpdate does not guarantee that there won't be a move that puts the Player's King in check, if so then we just disregard it by only accepting valid boards
-				if (!copy->kingInCheck(white))
-					minmax = std::max(minmax, search(depth - 1, *copy, moveMap, moveBonus));
+				if (!copy->kingInCheck(white)) {
+					moveBonus = bonus + bonusPoints(endCoordinates.first, endCoordinates.second, copy->piece(endCoordinates.first, endCoordinates.second));
+					minmax = std::max(minmax, search(depth - 1, *copy, moveMap, moveBonus, nextTurn, alpha, beta));
+
+					alpha = std::max(alpha, minmax);
+
+					if (alpha >= beta)
+						break; // Beta cut-off
+				}
 			}
 		}
 	}
@@ -111,13 +122,18 @@ int Chess::ChessAI::search(int depth, const Board & ChessBoard, std::map<int, Mo
 			{
 				std::unique_ptr<Board> copy = ChessBoard.clone();
 				endCoordinates = it->second[i];
-				moveBonus = bonus + bonusPoints(endCoordinates.first, endCoordinates.second, copy->piece(coordinates.first, coordinates.second));
 				copy->minmaxUpdate(coordinates, endCoordinates);
 
 				// minmaxUpdate does not guarantee that there won't be a move that puts the AI's King in check, if so then we just disregard it by only accepting valid boards
 				if (!copy->kingInCheck(black)) {
-					minmax = std::min(minmax, search(depth - 1, *copy, moveMap, moveBonus));
+					moveBonus = bonus + bonusPoints(endCoordinates.first, endCoordinates.second, copy->piece(endCoordinates.first, endCoordinates.second));
+					minmax = std::min(minmax, search(depth - 1, *copy, moveMap, moveBonus, nextTurn, alpha, beta));
+					
+					beta = std::min(beta, minmax);
 
+					if (alpha >= beta)
+						break; // Alpha cut-off
+					
 					if (depth == MAX_DEPTH)
 						moveMap.insert({minmax, Move { coordinates, endCoordinates }});
 				}
@@ -131,7 +147,7 @@ int Chess::ChessAI::search(int depth, const Board & ChessBoard, std::map<int, Mo
 
 int Chess::ChessAI::evaluate(const Board & ChessBoard, int bonus)
 {
-	return ChessBoard.points(black) - ChessBoard.points(white) + bonus;
+	return ChessBoard.points(white) - ChessBoard.points(black) + bonus;
 }
 
 int Chess::ChessAI::bonusPoints(int row, int column, char piece)

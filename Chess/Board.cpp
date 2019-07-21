@@ -383,10 +383,19 @@ void Chess::Board::copy(const Board & otherBoard)
 				break;
 			}
 
-			if (board[i][j] != nullptr)
+			if (board[i][j] != nullptr) {
 				board[i][j]->copy(otherBoard.board[i][j]);
+
+				if (board[i][j]->pieceColor() == black)
+					blackPieces.push_back(board[i][j]);
+
+				else if (board[i][j]->pieceColor() == white)
+					whitePieces.push_back(board[i][j]);
+			}
 		}
 	}
+
+	pieceValues = otherBoard.pieceValues;
 }
 
 
