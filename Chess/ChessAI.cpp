@@ -52,14 +52,11 @@ Move Chess::ChessAI::easyMove(Board * ChessBoard)
 
 	return Move{ coordinates, move };
 }
-#include <iostream>
 
 Move Chess::ChessAI::normalMove(Board * ChessBoard)
 {
 	std::map<int, Move> moveMap;
 	int minmax = search(MAX_DEPTH, *ChessBoard, moveMap, 0, black, std::numeric_limits<int>::min(), std::numeric_limits<int>::max());
-
-	std::cout << "minmax: " << minmax << std::endl;
 
 	return moveMap[minmax];
 }
@@ -147,7 +144,7 @@ int Chess::ChessAI::search(int depth, const Board & ChessBoard, std::map<int, Mo
 
 int Chess::ChessAI::evaluate(const Board & ChessBoard, int bonus)
 {
-	return ChessBoard.points(white) - ChessBoard.points(black) + bonus;
+	return (ChessBoard.points(black) + bonus) - ChessBoard.points(white);
 }
 
 int Chess::ChessAI::bonusPoints(int row, int column, char piece)

@@ -1,8 +1,6 @@
 #include "Board.h"
 #include <iostream>
 
-bool DEBUG = false;
-
 Chess::Board::Board()
 {
 	initialize(board);
@@ -35,16 +33,7 @@ void Chess::Board::updateCoordinates(int newRow, int newCol)
 void Chess::Board::playerStatus()
 {
 	((King*)blackKing)->checkedStatus(this);
-
 	((King*)whiteKing)->checkedStatus(this);
-
-	if (DEBUG) {
-		std::cout << " whiteKing in Check: " << (((King*)whiteKing)->inCheck() ? "True" : "False") << std::endl;
-		std::cout << " blackKing in Check: " << (((King*)blackKing)->inCheck() ? "True" : "False") << std::endl;
-
-		std::cout << " board[7][5] == nullptr: " << (board[7][5] == nullptr) << std::endl;
-		std::cout << " board[7][7] == nullptr: " << (board[7][7] == nullptr) << std::endl;
-	}
 }
 
 void Chess::Board::minmaxUpdate(std::pair<int, int> start, std::pair<int, int> end)
@@ -294,11 +283,6 @@ void Chess::Board::updatePieces(GameObject * pieceBeingRemoved)
 			break;
 		}
 	}
-
-	if (DEBUG) {
-		std::cout << "WhitePieces.size(): " << whitePieces.size() << std::endl;
-		std::cout << "BlackPieces.size(): " << blackPieces.size() << std::endl;
-	}
 }
 
 std::vector<Moves> Chess::Board::enemyPaths(int color) const
@@ -311,8 +295,7 @@ std::vector<Moves> Chess::Board::enemyPaths(int color) const
 
 std::unique_ptr<Chess::Board> Chess::Board::clone() const
 {
-	Board * newBoard = new Board(*this);
-	std::unique_ptr<Board> board_ptr = std::make_unique<Board>( *newBoard );
+	std::unique_ptr<Board> board_ptr = std::make_unique<Board>(*this);
 
 	return board_ptr;
 }

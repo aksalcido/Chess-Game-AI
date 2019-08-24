@@ -4,6 +4,7 @@
 #include "Tables.h"
 #include <random>
 #include <algorithm>
+
 #pragma once
 
 #define EASY 0

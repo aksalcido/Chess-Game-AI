@@ -104,37 +104,38 @@ bool Chess::GameState::isPlayersPiece(int row, int col) const
 
 void Chess::GameState::display() const
 {
-	std::cout << "   0 1 2 3 4 5 6 7\n -------------------" << std::endl;
+	printf("   0 1 2 3 4 5 6 7\n -------------------\n");
 
 	for (unsigned int i = 0; i < dimension; i++)
 	{
-		std::cout << i << "| ";
+		printf("%d| ", i);
 
 		for (unsigned int j = 0; j < dimension; j++) {
-			if ( ! ChessBoard.emptySpace(i,j) )
-				std::cout << ChessBoard.piece(i, j) << " ";
+
+			if (!ChessBoard.emptySpace(i, j))
+				printf("%c ", ChessBoard.piece(i, j));
+
 			else
-				std::cout << ". ";
+				printf(". ");
 		}
 
-		std::cout << "|" << std::endl;
+		printf("|\n");
 	}
+	printf(" -------------------\n");
 
-	std::cout << " -------------------" << std::endl;
-
-	if ( continuing() )
-		std::cout << "It is " << (turn == white ? "white's " : "black's ") << "turn to move!" << std::endl;
+	if (continuing())
+		printf("It is %s's turn to move!\n", (turn == white ? "white" : "black"));
 }
 
 void Chess::GameState::displayMove(int startRow, int startColumn, int endRow, int endColumn) const
 {
-	std::cout << "Move: (" << startRow << ", " << startColumn << ") -> (" << endRow << ", " << endColumn << ")" << std::endl;
+	printf("Move: (%d, %d) -> (%d, %d)\n", startRow, startColumn, endRow, endColumn);
 }
 
 void Chess::GameState::displayCheck() const
 {
-	const char * player = (turn == white ? "White's " : "Black's ");
-	std::cout << player << "king is in check!" << std::endl;
+	const char * player = (turn == white ? "White" : "Black");
+	printf("%s's king is in check!\n", player);
 }
 
 void Chess::GameState::displayWinner() const
@@ -144,13 +145,13 @@ void Chess::GameState::displayWinner() const
 	// Winner is the opposite player of the current turn
 	if (ChessBoard.kingInCheck(turn))
 	{
-		winner = (turn == white ? "black!" : "white!");
-		std::cout << "CHECKMATE! The winner of the match is " << winner << std::endl;
+		winner = (turn == white ? "black" : "white");
+		printf("CHECKMATE! The winner of the match is %s!\n", winner);
 	}
 
 	// STALEMATE !!!
 	else {
-		std::cout << "The Game has ended in a Stalemate!" << std::endl;
+		printf("The Game has ended in a Stalemate!\n");
 	}
 }
 
@@ -168,11 +169,11 @@ int Chess::GameState::displayPieceOptions()
 {
 	int promoted = -1;
 
-	std::cout << "1: Queen (Default)" << std::endl;
-	std::cout << "2: Rook" << std::endl;
-	std::cout << "3: Bishop" << std::endl;
-	std::cout << "4: Knight" << std::endl;
-	std::cout << "Promote: ";
+	printf("1: Queen (Default)\n");
+	printf("2: Rook\n");
+	printf("3: Bishop\n");
+	printf("4: Knight\n");
+	printf("Promote: ");
 
 	std::cin >> promoted;
 	
@@ -185,7 +186,7 @@ int Chess::GameState::displayPieceOptions()
 
 void Chess::GameState::prompt(const char * message)
 {
-	std::cout << message;
+	printf("%s", message);
 }
 
 void Chess::GameState::input(int & row, int & col, int & endRow, int & endCol)

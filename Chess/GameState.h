@@ -2,6 +2,7 @@
 #define GAMESTATE_H
 #pragma once
 #include <iostream>
+#include <stdio.h>
 #include <memory>
 #include "Board.h"
 #include "ChessAI.h"
