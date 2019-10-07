@@ -19,13 +19,13 @@ Console Version of Chess with Incorporation of AI
   
   ##### Example)
   <img src='Move Instructions.png'>
-  
-  
-  <img src='Checkmate.png'>
+
   
 # Simple AI
-
-
+  
+  #### Sample Play and Checkmate)
+   <img src='Checkmate.png'>
+    
 # Slightly Smarter AI
 ### Implemented:
   - Minmax with Alpha-beta Pruning
