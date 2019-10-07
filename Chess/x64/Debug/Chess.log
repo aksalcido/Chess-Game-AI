@@ -1,2 +1,5 @@
-﻿  GameState.cpp
+﻿  ChessAI.cpp
+c:\users\armando\desktop\coding files\visualstudio projects\c++\projects\chess\chess-game-ai\chess\chessai.cpp(55): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+c:\users\armando\desktop\coding files\visualstudio projects\c++\projects\chess\chess-game-ai\chess\chessai.cpp(68): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+c:\users\armando\desktop\coding files\visualstudio projects\c++\projects\chess\chess-game-ai\chess\chessai.cpp(21): warning C4715: 'Chess::ChessAI::chooseMove': not all control paths return a value
   Chess.vcxproj -> C:\Users\Armando\Desktop\Coding Files\VisualStudio Projects\C++\Projects\Chess\Chess-Game-AI\x64\Debug\Chess.exe

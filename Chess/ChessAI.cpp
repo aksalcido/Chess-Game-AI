@@ -20,9 +20,30 @@ Move Chess::ChessAI::chooseMove(Board * ChessBoard)
 
 }
 
+
+#include <iostream>
+
+GameObjectMoves Chess::ChessAI::removeUnmovablePieces(GameObjectMoves & moveMap)
+{
+	GameObjectMoves newMap;
+
+	for (GameObjectMoves::iterator it = moveMap.begin(); it != moveMap.end(); it++)
+	{
+		if (it->second.size() != 0)
+			newMap.insert(std::make_pair(it->first, it->second));
+	}
+
+	return newMap;
+}
+
+typedef std::vector<std::pair<int, int>> Moves;
+typedef std::map<std::pair<int, int>, Moves> GameObjectMoves;
+
 Move Chess::ChessAI::easyMove(Board * ChessBoard)
 {
-	GameObjectMoves moveMap = ChessBoard->allMoves(color);
+	// Initializes a tempMap of all pieces and then discards the pieces that have no available moves on the Chessboard
+	GameObjectMoves tempMap = ChessBoard->allMoves(color), moveMap = removeUnmovablePieces(tempMap);
+		
 	GameObjectMoves::iterator it;
 	int random_piece, random_move, index = 0;
 
@@ -53,10 +74,13 @@ Move Chess::ChessAI::easyMove(Board * ChessBoard)
 	return Move{ coordinates, move };
 }
 
+#include <iostream>
+
 Move Chess::ChessAI::normalMove(Board * ChessBoard)
 {
 	std::map<int, Move> moveMap;
 	int minmax = search(MAX_DEPTH, *ChessBoard, moveMap, 0, black, std::numeric_limits<int>::min(), std::numeric_limits<int>::max());
+	std::cout << "minmax: " << minmax << std::endl;
 
 	return moveMap[minmax];
 }

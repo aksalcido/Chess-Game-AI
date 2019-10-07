@@ -37,6 +37,9 @@ namespace Chess {
 
 		int difficulty, color, maxDepth;
 
+		// Removes pieces that have no available moves on the current Chessboard
+		GameObjectMoves removeUnmovablePieces(GameObjectMoves & moveMap);
+
 		// Function that handles movement for Easy Difficulty, based off random choices
 		Move easyMove(Board * ChessBoard);
 

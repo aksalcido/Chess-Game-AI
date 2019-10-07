@@ -157,10 +157,15 @@ void Chess::Tables::initializePawnTable()
 		{ 1, 1, 2, 8, 8, 2, 1, 1 },
 		{ 1, 1, 8, 10, 10, 8, 1, 1 },
 		{ 0, 0, 0, 10, 10, 0, 0, 0 },
-		{ 1, -1, -1, 4, 4, -1, -1, 1 },
+		{ 1, -1, -1, 8, 4, -1, -1, 1 },
 		{ 1, 1, 1, -2, -2, 1, 1, 1 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0 }
 	};
+
+	//int pos[dimension][dimension] = 
+	//{
+
+	//}
 
 	setup(pos, WhitePawnPositions, BlackPawnPositions);
 }
