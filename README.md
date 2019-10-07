@@ -22,13 +22,13 @@ Console Version of Chess with Incorporation of AI
 
   
 # Simple AI
-  
+Random Moves are made accordingly to a random source of entropy using the standard random library.
+
   #### Sample Play and Checkmate)
    <img src='Checkmate.png'>
     
 # Slightly Smarter AI
-### Implemented:
-  - Minmax with Alpha-beta Pruning
+Moves are made following the Minmax algorithm with Alpha-beta Pruning. Evaluation function is not perfect currently and needs to be updated to better score positions on the board.
  
 ### Future Updates:
   - Evaluation function not properly complete accordingly to best position in all cases
