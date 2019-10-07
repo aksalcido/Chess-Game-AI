@@ -3,12 +3,13 @@ Console Version of Chess with Incorporation of AI
 
 # Instructions
   #### Players
-  White is represented in lowercase character game pieces. Black is represented in uppercase character game pieces.
+   - White is represented in lowercase character game pieces
+   - Black is represented in uppercase character game pieces.
   
   #### Moves 
-  Moves are made in the following format: piece_row piece_column destination_row destination_column
+   - Moves are made in the following format: piece_row piece_column destination_row destination_column
   
-  ### Example)
+  ##### Example)
   <img src='Move Instructions.png'>
   
   
