@@ -32,6 +32,8 @@ Random Moves are made accordingly to a random source of entropy using the standa
 # Slightly Smarter AI
 Moves are made following the Minmax algorithm with Alpha-beta Pruning. Evaluation function is not perfect currently and needs to be updated to better score positions on the board.
  
+ #### Sample Play)
+
 ### Future Updates:
   - Evaluation function not properly complete accordingly to best position in all cases
   - GUI?
