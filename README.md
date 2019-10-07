@@ -7,7 +7,8 @@ Console Version of Chess with Incorporation of AI
 
 
 # Slightly Smarter AI
-## Implemented:
-  minmax algorithm with alpha-beta pruning
+### Implemented:
+  - Minmax with Alpha-beta Pruning
  
-## Future Updates:
+### Future Updates:
+  - Evaluation function not properly complete accordingly to best position in all cases
