@@ -15,7 +15,7 @@ Console Version of Chess with Incorporation of AI
    - Pawn  : **P** or **p**
    
   #### Moves 
-   - Moves are made in the following format: piece_row piece_column destination_row destination_column
+   - Moves are made in the following format: **row** **column** **destinationRow** **destinationColumn**
   
   ##### Example)
   <img src='Move Instructions.png'>
