@@ -12,3 +12,4 @@ Console Version of Chess with Incorporation of AI
  
 ### Future Updates:
   - Evaluation function not properly complete accordingly to best position in all cases
+  - GUI?
