@@ -1,6 +1,6 @@
 # Chess-Chess-AI
 Console Version of Chess with Incorporation of:
-  - Simple AI: relies on a source of entropy for moves
+  - Simple AI: relies on a random source of entropy for moves
   - Slightly Smarter AI: relies on the Minmax algorithm with Alpha-beta pruning
 
 # Instructions
