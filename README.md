@@ -20,14 +20,14 @@ Console Version of Chess with Incorporation of:
    - Moves are made in the following format: **row** **column** **destinationRow** **destinationColumn**
   
   ##### Example)
-  <img src='Move Instructions.png'>
+  <img src='images/Move Instructions.png'>
 
   
 # Simple AI
 Random Moves are made accordingly to a random source of entropy using the standard random library.
 
   #### Sample Play and Checkmate)
-   <img src='Checkmate.png'>
+   <img src='images/Checkmate.png'>
     
 # Slightly Smarter AI
 Moves are made following the Minmax algorithm with Alpha-beta Pruning. Evaluation function is not perfect currently and needs to be updated to better score positions on the board.
