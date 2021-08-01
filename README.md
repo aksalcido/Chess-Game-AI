@@ -1,9 +1,11 @@
 # Chess-Chess-AI
 Console Version of Chess with Incorporation of:
   - Simple AI: relies on a random source of entropy for moves
-  - Slightly Smarter AI: relies on the Minmax algorithm with Alpha-beta pruning
+  - Smarter AI: relies on the Minmax algorithm with Alpha-beta pruning
 
 # Instructions
+  Use the makefile to compile out and run the program
+  
   #### Players
    - **White** is represented in **lowercase** characters.
    - **Black** is represented in **uppercase** characters.
